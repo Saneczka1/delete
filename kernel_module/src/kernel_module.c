@@ -87,7 +87,7 @@ static ssize_t rabb_read(struct kobject *kobj, struct kobj_attribute *attr,const
 }
 // makra do komunikacji
 
-static struct kobj_attribute raba1_attr = __ATTR_WO(raba1);
+static struct kobj_attribute raba1_attr = __ATTR_WO(raba1_read);
 static struct kobj_attribute raba2_attr = __ATTR_WO(raba2);
 static struct kobj_attribute rabw_attr = __ATTR_RO(rabw);
 static struct kobj_attribute rabl_attr = __ATTR_RO(rabl);

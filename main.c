@@ -22,7 +22,7 @@
 #define SYSFS_FILE_WE2 "/sys/kernel/sykt/raba2"
 #define SYSFS_FILE_RES "/sys/kernel/sykt/rabw"
 #define SYSFS_FILE_STATUS "/sys/kernel/sykt/rabb"
-#define SYSFY_FILE_ONES "/sys/kernel/sykt/rabl"
+#define SYSFS_FILE_ONES "/sys/kernel/sykt/rabl"
 
 
 

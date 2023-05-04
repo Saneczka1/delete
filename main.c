@@ -8,16 +8,7 @@
 #include <string.h>
 #define MAX_BUFFER 1024
 
-/*
-#define 1_ADRES_READ "/proc/sykom/l"
-#define 2_ADRES_WRITE "/proc/sykom/2"
-#define 3_ADRES_READ "/proc/sykom/3"
-#define 4_ADRES_WRITE "/proc/sykom/4"
-#define 5_ADRES_READ "/proc/sykom/5"
-#define 6_ADRES_WRITE "/proc/sykom/6"*/
-
-
-
+//dufinicja plików
 #define SYSFS_FILE_WE1 "/sys/kernel/sykt/raba1"
 #define SYSFS_FILE_WE2 "/sys/kernel/sykt/raba2"
 #define SYSFS_FILE_RES "/sys/kernel/sykt/rabw"
@@ -32,6 +23,7 @@ unsigned int multiply(unsigned int, unsigned int);
 int test_module();
 
 
+//możliwe trzeba to dać na końcu
 /*if(test > 0){
 printf("TEST FAILED at %d values\n",test);
 }
@@ -44,6 +36,8 @@ return 0;
 int main(void){
 int test = test_module();
 
+
+// licze próbki poprostu
 if(test > 0){
 printf("TEST FAILED at %d values\n",test);
 }
@@ -63,7 +57,7 @@ printf("Open %s - error number %d\n", filePath, errno);
 exit(1);
 }
 int n=read(file, buffer, MAX_BUFFER);
-if(n>0){
+if(n>0){    // wynika z dokumentacji
         buffer[n]='\0';
         printf("%s", buffer); 
     }else{
@@ -71,7 +65,7 @@ if(n>0){
     }
 
 close(file);
-return strtoul(buffer, NULL, 16);
+return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
 }
 
 
@@ -80,7 +74,7 @@ return strtoul(buffer, NULL, 16);
 void write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];
 	int fd_in=open(filePath, O_RDWR); 
-	if(fd_in < 0){
+	if(fd_in < 0){   // wynika z dokumentacji, wz z instrukcji więc powinno być git
 		 printf("Open %s - error number %d\n", filePath, errno);
 		 exit(2);
 	}
@@ -101,19 +95,18 @@ void write_to_file(char *filePath, unsigned int input){
 unsigned int multiply(unsigned int arg1, unsigned int arg2){
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
-//write_to_file(SYSFS_FILE_ONES, 1);
-//write_to_file(SYSFS_FILE_STATUS,1);
+write_to_file(SYSFS_FILE_STATUS,3);
 unsigned int read = 0;
-unsigned int read0 = 0;
-unsigned int read1 = 0;
-unsigned int read2 = 0;
+unsigned int readw = 0;
+unsigned int readl = 0;
+unsigned int readb = 0;
 do{
 read = read_from_file(SYSFS_FILE_STATUS);
 }
 while(read != 3);
-read0 = read_from_file(SYSFS_FILE_RES);
-read1 = read_from_file(SYSFS_FILE_ONES);
-read2 = read_from_file(SYSFS_FILE_STATUS);
+readw = read_from_file(SYSFS_FILE_RES);
+readl = read_from_file(SYSFS_FILE_ONES);
+readb = read_from_file(SYSFS_FILE_STATUS);
 
 printf("Arg1=0x%x, Arg2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, read0, read1,read2);
 return read;

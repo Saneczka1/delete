@@ -5,13 +5,14 @@
 #include <asm/io.h>
 MODULE_INFO(intree, "Y");
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Aleksander Pruszkowski");
+MODULE_AUTHOR("Aleksandr Rogaczewski");
 MODULE_DESCRIPTION("Simple kernel module for SYKT/SYKOM lecture");
 MODULE_VERSION("0.01");
 #define SYKT_MEM_BASE_ADDR (0x00100000)
 #define SYKT_MEM_SIZE (0x8000)
 #define SYKT_EXIT (0x3333)
 #define SYKT_EXIT_CODE (0x7F)
+#define FINISHER		(0x0000) 
 
 
 #define SYKT_QEMU_CTRL_ADDR (0x00100000)
@@ -20,17 +21,18 @@ MODULE_VERSION("0.01");
 
 
 #define SYKT_GPIO_ADDR_SPACE (baseptr) 
+#define SYKT_GPIO_CTRL_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A1)  //dodałem bo coś nie działa
 #define SYKT_GPIO_ARG2_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000388)
 #define SYKT_GPIO_ARG1_ADDR (SYKT_GPIO_ADDR_SPACE+0x0000037F0)
 #define SYKT_GPIO_RESULT_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000390)
 #define SYKT_GPIO_ONES_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000398)
 #define SYKT_GPIO_STATUS_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A0)
 
-#define DONE_BIT (0x00000001)
+#define DONE (0x00000001)
 
 void __iomem *baseptr;
 static struct kobject *kobj_ref;
-static int ctrlValue;
+static int ctrl;
 static int raba1;
 static int raba2;
 static int rabw;
@@ -38,14 +40,14 @@ static int rabl;
 static int rabb;
 // ================= funkcje do komunikacji ===========================
 // odczyt argumentu arg1 i zapis na odpowiednie miejsce w pamięci // potrzebuje do zapisu tylko 2 znaczeńczyli tylko argumetu 1 i argumentu 2
-static ssize_t raba1_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
+static ssize_t raba1_read(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
 {
 sscanf(buf,"%x",&raba1);
 writel(raba1, SYKT_GPIO_ARG1_ADDR);
 return count;
 }
 // odczyt argumentu arg2 i zapis na odpowiednie miejsce w pamięci
-static ssize_t raba2_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
+static ssize_t raba2_read(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
 {
 sscanf(buf,"%x",&raba2);
 writel(raba2, SYKT_GPIO_ARG2_ADDR);
@@ -55,7 +57,7 @@ return count;
 
 
 // odczyt wyniku z modułu
-static ssize_t rabw_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+static ssize_t rabw_write(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 {
 rabw = readl(SYKT_GPIO_RESULT_ADDR);
 return sprintf(buf, "%x", rabw);
@@ -64,24 +66,23 @@ return sprintf(buf, "%x", rabw);
 
 
 
-static ssize_t rabl_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+static ssize_t rabl_write(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 {
     rabl = readl(SYKT_GPIO_ONES_ADDR);
     return sprintf(buf, "%x", rabl);
 }
 
 // odczyt statusu (czy moduł skończył działanie)
-static ssize_t rabb_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+static ssize_t rabb_write(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 
 {
 rabb = readl(SYKT_GPIO_STATUS_ADDR);
 return sprintf(buf, "%x", rabw);
 }
-
-static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count)
+static ssize_t rabb_read(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count)
 {
-        sscanf(buf,"%x",&rabb);
-		writel(rabb, SYKT_GPIO_STATUS_ADDR);
+        sscanf(buf,"%x",&ctrl);
+		writel(ctrl, SYKT_GPIO_CTRL_ADDR);
         return count;
 }
 // makra do komunikacji

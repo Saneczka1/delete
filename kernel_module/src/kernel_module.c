@@ -38,6 +38,17 @@ static int raba2;
 static int rabw;
 static int rabl;
 static int rabb;
+
+
+
+static ssize_t raba1_read(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
+static ssize_t raba2_read(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
+static ssize_t rabw_write(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
+static ssize_t rabl_write(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
+static ssize_t rabb_write(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
+static ssize_t rabb_read(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
+
+
 // ================= funkcje do komunikacji ===========================
 // odczyt argumentu arg1 i zapis na odpowiednie miejsce w pamięci // potrzebuje do zapisu tylko 2 znaczeńczyli tylko argumetu 1 i argumentu 2
 static ssize_t raba1_read(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
@@ -87,7 +98,7 @@ static ssize_t rabb_read(struct kobject *kobj, struct kobj_attribute *attr,const
 }
 // makra do komunikacji
 
-static struct kobj_attribute raba1_attr = __ATTR_WO(raba1_read);
+static struct kobj_attribute raba1_attr = __ATTR_WO(raba1);
 static struct kobj_attribute raba2_attr = __ATTR_WO(raba2);
 static struct kobj_attribute rabw_attr = __ATTR_RO(rabw);
 static struct kobj_attribute rabl_attr = __ATTR_RO(rabl);

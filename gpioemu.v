@@ -30,7 +30,7 @@ module gpioemu(n_reset,
     reg [31:0]      gpio_out_s;
 
 
-    \\dodatkowe zmienne
+    //dodatkowe zmienne
 
     reg unsigned [48:0] result;
     reg unsigned[23:0] A2;

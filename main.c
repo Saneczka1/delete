@@ -27,7 +27,7 @@
 
 
 unsigned int read_from_file(char *);   // oby nie było błędów z kompilacją i z kolejnoscią, definiuje metody na początku
-int write_to_file(char *, unsigned int);
+void write_to_file(char *, unsigned int);
 unsigned int multiply(unsigned int, unsigned int);
 int test_module();
 

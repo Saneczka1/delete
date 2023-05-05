@@ -69,7 +69,7 @@ module gpioemu(n_reset,
     if (saddress == 16'h03A0 ) begin
         ready <= 1'b1;
 		done <=0;
-		valid <=1'b1;
+		valid =1'b1;
 		B = 2'b11;
         state <= IDLE;
         gpio_out_s <= gpio_out_s + 1; //licznik
@@ -107,8 +107,8 @@ always @(posedge clk) begin
         IDLE: begin
             result = 0;
 			ready <= 1'b0;
-			valid <=1'b1;
-			B <= 2'b01;
+			valid =1'b1;
+			B = 2'b01;
 			done <= 0;
             tmp_ones_count = 0;
             state <= MULT;

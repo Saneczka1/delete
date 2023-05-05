@@ -153,23 +153,11 @@ always @(posedge clk) begin
         end
         DONE: begin
 		done <= 1'b1;
-            if (srd && saddress == 16'h03A0) begin // write B
-                B = sdata_in[2:1];
-				
-            end else if (srd && saddress == 16'h0398) begin // write L
-               L <= sdata_in[23:0];
-				
-            end else if (srd && saddress == 16'h0390) begin // write W
-                W <= sdata_in[31:0];
-				
-            end else begin
+            
                 state <= 4;
                 ready <= 1'b1;
-				
-				
-                operation_count <= operation_count + 1;
+			    operation_count <= operation_count + 1;
             end
-        end
     endcase
 end
 

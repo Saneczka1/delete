@@ -108,8 +108,8 @@ readw = read_from_file(SYSFS_FILE_RES);
 readl = read_from_file(SYSFS_FILE_ONES);
 readb = read_from_file(SYSFS_FILE_STATUS);
 
-//printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
-printf("A1=0x%x, A2=0x%x", arg1, arg2);
+printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
+//printf("A1=0x%x, A2=0x%x", arg1, arg2);
 return read;
 }
 
@@ -117,9 +117,9 @@ return read;
 
 
 int test_module(){
-unsigned int args1[3] = { 3, 0xC, 8};
+unsigned int args1[3] = { 3, 0xc, 8};
 unsigned int args2[3] = { 4, 3, 3};
-unsigned int results[3] = { 0xC,24,18 };
+unsigned int results[3] = { 0xc,24,18 };
 unsigned int ones[3] ={3,2,2};
 for(int i=0; i<3; i++){
 if( multiply(args1[i],args2[i]) != results[i] && multiply(args1[i],args2[i]) != ones[i])

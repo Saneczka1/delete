@@ -1,3 +1,6 @@
+/* verilator lint_off UNUSED */
+/* verilator lint_off MULTIDRIVEN */
+/* verilator lint_off BLKSEQ */
 module gpioemu(n_reset,
     saddress[15:0], srd, swr,
     sdata_in[31:0], sdata_out[31:0],
@@ -50,7 +53,7 @@ module gpioemu(n_reset,
         sdata_out_s <= 0;
         state <= 4;
         result =49'b0;
-		W <= 32'b0;
+		W = 32'b0;
         tmp_ones_count = 0;
         operation_count <= 0;
         ready <= 1'b1;

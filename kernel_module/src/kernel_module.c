@@ -66,6 +66,21 @@ raba2 = readl(SYKT_GPIO_ARG2_ADDR);
 return sprintf(buf, "%x", raba2);
 }
 
+// odczyt argumentu arg2 i zapis na odpowiednie miejsce w pamięci
+static ssize_t rabw_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
+{
+sscanf(buf,"%x",&rabw);
+writel(rabw, SYKT_GPIO_RESULT_ADDR);
+return count;
+}
+// odczyt argumentu arg2 i zapis na odpowiednie miejsce w pamięci
+static ssize_t rabl_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
+{
+sscanf(buf,"%x",&rabl);
+writel(raba2, SYKT_GPIO_ONES_ADDR);
+return count;
+}
+
 
 // odczyt wyniku z modułu
 static ssize_t rabw_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)

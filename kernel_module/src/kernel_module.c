@@ -59,43 +59,6 @@ static int rabw;
 static int rabl;
 static int rabb;
 
-struct kobj_attribute {
- struct attribute raba1;
- ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
- ssize_t (*store)(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
-};
-
-struct kobj_attribute {
- struct attribute raba2;
- ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
- ssize_t (*store)(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
-};
-
-
-struct kobj_attribute {
- struct attribute rabl;
- ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
- ssize_t (*store)(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
-};
-
-
-struct kobj_attribute {
- struct attribute rabw;
- ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
- ssize_t (*store)(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
-};
-
-
-
-struct kobj_attribute {
- struct attribute rabw;
- ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr, char *buf);
- ssize_t (*store)(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count);
-};
-
-
-
-
 // ================= funkcje do komunikacji ===========================
 // odczyt argumentu arg1 i zapis na odpowiednie miejsce w pamięci // potrzebuje do zapisu tylko 2 znaczeńczyli tylko argumetu 1 i argumentu 2
 static ssize_t raba1_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
@@ -144,14 +107,14 @@ static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,cons
 		writel(ctrl, SYKT_GPIO_CTRL_ADDR);
         return count;
 }
-// makra do komunikacji
-/*
-static struct kobj_attribute raba1_attr = __ATTR_RO(raba1);
-static struct kobj_attribute raba2_attr = __ATTR_RO(raba2);
-static struct kobj_attribute rabw_attr = __ATTR_RO(rabw);
-static struct kobj_attribute rabl_attr = __ATTR_RO(rabl);
-static struct kobj_attribute rabb_attr = __ATTR_RW(rabb);
-*/
+
+
+static struct kobj_attribute raba1_attr = __ATTR(raba1_value, 0660, sysfs_show, sysfs_store);
+static struct kobj_attribute raba2_attr = __ATTR(raba2_value, 0660, sysfs_show, sysfs_store);
+static struct kobj_attribute rabw_attr = __ATTR(rabw_value, 0660, sysfs_show, sysfs_store);
+static struct kobj_attribute rabl_attr = __ATTR(rabl_value, 0660, sysfs_show, sysfs_store);
+static struct kobj_attribute rabb_attr = __ATTR(rabb_value, 0660, sysfs_show, sysfs_store);
+
 // ===================================================================
 
 static struct file_operations fops =

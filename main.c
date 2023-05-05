@@ -95,7 +95,7 @@ void write_to_file(char *filePath, unsigned int input){
 unsigned int multiply(unsigned int arg1, unsigned int arg2){
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
-write_to_file(SYSFS_FILE_STATUS,3);
+write_to_file(SYSFS_FILE_STATUS,11);
 unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
@@ -103,7 +103,7 @@ unsigned int readb = 0;
 do{
 read = read_from_file(SYSFS_FILE_STATUS);
 }
-while(read != 3);
+while(read != 11);
 readw = read_from_file(SYSFS_FILE_RES);
 readl = read_from_file(SYSFS_FILE_ONES);
 readb = read_from_file(SYSFS_FILE_STATUS);
@@ -119,7 +119,7 @@ int test_module(){
 unsigned int args1[3] = { 3, 0xC, 8};
 unsigned int args2[3] = { 4, 3, 3};
 unsigned int results[3] = { 0xC,24,18 };
-unsigned int ones[3] ={2,2,2};
+unsigned int ones[3] ={3,2,2};
 for(int i=0; i<7; i++){
 if( multiply(args1[i],args2[i]) != results[i] && multiply(args1[i],args2[i]) != ones[i])
 return i+1;

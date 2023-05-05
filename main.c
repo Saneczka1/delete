@@ -23,15 +23,7 @@ unsigned int multiply(unsigned int, unsigned int);
 int test_module();
 
 
-//możliwe trzeba to dać na końcu
-/*if(test > 0){
-printf("TEST FAILED at %d values\n",test);
-}
-else{
-printf("====== TEST PASSED =====\n");
-}
-return 0;
-}*/
+
 
 int main(void){
 int test = test_module();
@@ -95,7 +87,7 @@ void write_to_file(char *filePath, unsigned int input){
 unsigned int multiply(unsigned int arg1, unsigned int arg2){
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
-write_to_file(SYSFS_FILE_STATUS,11);
+//write_to_file(SYSFS_FILE_STATUS,11);
 unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
@@ -130,4 +122,4 @@ return 0;
 }
 
 
-//for commit
+

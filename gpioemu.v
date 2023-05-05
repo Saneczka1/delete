@@ -120,7 +120,7 @@ always @(posedge clk) begin
 			ready <= 0;
             for (integer i = 0; i < 24; i = i + 1) begin
                 if (A2[i]) begin
-                    result = result + ({24'h0, A1} << i);
+                    result = result + ({25'h0, A1} << i);
                 end
             end
 			valid = (result[48:32] == 0);

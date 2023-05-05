@@ -153,13 +153,13 @@ always @(posedge clk) begin
         end
         DONE: begin
 		done <= 1'b1;
-            if (swr && saddress == 16'h03A0) begin // write B
+            if (srd && saddress == 16'h03A0) begin // write B
                 B = sdata_in[2:1];
 				
-            end else if (swr && saddress == 16'h0398) begin // write L
+            end else if (srd && saddress == 16'h0398) begin // write L
                L <= sdata_in[23:0];
 				
-            end else if (swr && saddress == 16'h0390) begin // write W
+            end else if (srd && saddress == 16'h0390) begin // write W
                 W <= sdata_in[31:0];
 				
             end else begin

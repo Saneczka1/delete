@@ -109,7 +109,7 @@ return sprintf(buf, "%x", rabb);
 static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count)
 {
         sscanf(buf,"%x",&ctrl);
-		writel(ctrl, SYKT_GPIO_CTRL_ADDR);
+		writel(rabb, SYKT_GPIO_STATUS_ADDR);
         return count;
 }
 // makra do komunikacji

@@ -53,6 +53,18 @@ writel(raba2, SYKT_GPIO_ARG2_ADDR);
 return count;
 }
 
+// odczyt wyniku z modułu
+static ssize_t rab1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+{
+rab1 = readl(SYKT_GPIO_ARG1_ADDR);
+return sprintf(buf, "%x", rab1);
+}
+
+static ssize_t rab2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+{
+rab2 = readl(SYKT_GPIO_ARG2_ADDR);
+return sprintf(buf, "%x", rab2);
+}
 
 
 // odczyt wyniku z modułu
@@ -87,7 +99,7 @@ static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,cons
 }
 // makra do komunikacji
 
-static struct kobj_attribute raba1_attr = __ATTR(raba1_value, 0660, raba1_show, raba1_store);
+static struct kobj_attribute raba1_attr = __ATTR(raba1_value, 0660, sysfs_show, sysfs_store);
 static struct kobj_attribute raba2_attr = __ATTR(raba2_value, 0660, sysfs_show, sysfs_store);
 static struct kobj_attribute rabw_attr = __ATTR(rabw_value, 0660, sysfs_show, sysfs_store);
 static struct kobj_attribute rabl_attr = __ATTR(rabl_value, 0660, sysfs_show, sysfs_store);

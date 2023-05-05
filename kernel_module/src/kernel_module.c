@@ -76,7 +76,7 @@ static ssize_t rabb_show(struct kobject *kobj,struct kobj_attribute *attr, char 
 
 {
 rabb = readl(SYKT_GPIO_STATUS_ADDR);
-return sprintf(buf, "%x", rabw);
+return sprintf(buf, "%x", rabb);
 }
 
 static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count)

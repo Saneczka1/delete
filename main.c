@@ -109,7 +109,7 @@ readl = read_from_file(SYSFS_FILE_ONES);
 readb = read_from_file(SYSFS_FILE_STATUS);
 
 //printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
-printf("A1=0x%x, A2=0x%x, arg1, arg2);
+printf("A1=0x%x, A2=0x%x", arg1, arg2);
 return read;
 }
 

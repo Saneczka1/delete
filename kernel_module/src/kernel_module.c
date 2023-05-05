@@ -5,15 +5,13 @@
 #include <asm/io.h>
 MODULE_INFO(intree, "Y");
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Aleksandr Rogaczewski");
+MODULE_AUTHOR("Aleksander Pruszkowski");
 MODULE_DESCRIPTION("Simple kernel module for SYKT/SYKOM lecture");
 MODULE_VERSION("0.01");
 #define SYKT_MEM_BASE_ADDR (0x00100000)
 #define SYKT_MEM_SIZE (0x8000)
 #define SYKT_EXIT (0x3333)
 #define SYKT_EXIT_CODE (0x7F)
-
-#define KOBJ_NAME_LEN 20 
 
 
 #define SYKT_QEMU_CTRL_ADDR (0x00100000)
@@ -22,33 +20,14 @@ MODULE_VERSION("0.01");
 
 
 #define SYKT_GPIO_ADDR_SPACE (baseptr) 
-#define SYKT_GPIO_ADDR_ARG2 (SYKT_GPIO_ADDR_SPACE+0x00000388)
-#define SYKT_GPIO_ADDR_CTRL (SYKT_GPIO_ADDR_SPACE+0x000003A1)
-#define SYKT_GPIO_ADDR_ARG1 (SYKT_GPIO_ADDR_SPACE+0x0000037F0)
-#define SYKT_GPIO_ADDR_RESULT (SYKT_GPIO_ADDR_SPACE+0x00000390)
-#define SYKT_GPIO_ADDR_ONES (SYKT_GPIO_ADDR_SPACE+0x00000398)
-#define SYKT_GPIO_ADDR_STATUS (SYKT_GPIO_ADDR_SPACE+0x000003A0)
+#define SYKT_GPIO_ARG2_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000388)
+#define SYKT_GPIO_CTRL_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A1)
+#define SYKT_GPIO_ARG1_ADDR (SYKT_GPIO_ADDR_SPACE+0x0000037F0)
+#define SYKT_GPIO_RESULT_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000390)
+#define SYKT_GPIO_ONES_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000398)
+#define SYKT_GPIO_STATUS_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A0)
 
 #define DONE (0x00000001)
-
-
-
-struct kobject {
- char *k_name;
- char name[KOBJ_NAME_LEN];
- struct kref kref;
- struct list_head entry;
- struct kobject *parent;
- struct kset *kset;
- struct kobj_type *ktype;
- struct dentry *dentry;
-};
-
-/*
-kobj_ref = kobject_create_and_add("etx_sysfs",kernel_kobj); //sys/kernel/etx_sysfs
-/*Freeing Kobj
-kobject_put(kobj_ref);*/
-
 
 void __iomem *baseptr;
 static struct kobject *kobj_ref;
@@ -58,7 +37,6 @@ static int raba2;
 static int rabw;
 static int rabl;
 static int rabb;
-
 // ================= funkcje do komunikacji ===========================
 // odczyt argumentu arg1 i zapis na odpowiednie miejsce w pamięci // potrzebuje do zapisu tylko 2 znaczeńczyli tylko argumetu 1 i argumentu 2
 static ssize_t raba1_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
@@ -107,7 +85,7 @@ static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,cons
 		writel(ctrl, SYKT_GPIO_CTRL_ADDR);
         return count;
 }
-
+// makra do komunikacji
 
 static struct kobj_attribute raba1_attr = __ATTR(raba1_value, 0660, sysfs_show, sysfs_store);
 static struct kobj_attribute raba2_attr = __ATTR(raba2_value, 0660, sysfs_show, sysfs_store);
@@ -116,17 +94,6 @@ static struct kobj_attribute rabl_attr = __ATTR(rabl_value, 0660, sysfs_show, sy
 static struct kobj_attribute rabb_attr = __ATTR(rabb_value, 0660, sysfs_show, sysfs_store);
 
 // ===================================================================
-
-static struct file_operations fops =
-{
-        .owner          = THIS_MODULE,
-        .read           = etx_read,
-        .write          = etx_write,
-        .open           = etx_open,
-        .release        = etx_release,
-};
-
-
 
 
 

@@ -54,16 +54,16 @@ return count;
 }
 
 // odczyt wyniku z modułu
-static ssize_t rab1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+static ssize_t raba1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 {
-rab1 = readl(SYKT_GPIO_ARG1_ADDR);
-return sprintf(buf, "%x", rab1);
+raba1 = readl(SYKT_GPIO_ARG1_ADDR);
+return sprintf(buf, "%x", raba1);
 }
 
-static ssize_t rab2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+static ssize_t raba2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 {
-rab2 = readl(SYKT_GPIO_ARG2_ADDR);
-return sprintf(buf, "%x", rab2);
+raba2 = readl(SYKT_GPIO_ARG2_ADDR);
+return sprintf(buf, "%x", raba2);
 }
 
 

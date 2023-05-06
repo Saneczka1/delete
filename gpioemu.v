@@ -70,10 +70,10 @@ module gpioemu(n_reset,
     always @(posedge swr) begin   // może być błąd
        
     if (saddress == 16'h03A0 ) begin
-        ready <= 1'b1;
+        ready <= 1'b0;
 		done <=0;
 		valid =1'b1;
-		B = 2'b11;
+		B = 2'b01;
         state <= IDLE;
         gpio_out_s <= gpio_out_s + 1; //licznik
     end
@@ -143,7 +143,11 @@ always @(posedge clk) begin
         end
         DONE: begin
 		done <= 1'b1;
+		
+           
+				B = 2'b11;
                 operation_count <= operation_count + 1;
+           
         end
     endcase
 end

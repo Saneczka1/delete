@@ -87,7 +87,7 @@ void write_to_file(char *filePath, unsigned int input){
 unsigned int multiply(unsigned int arg1, unsigned int arg2){
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
-write_to_file(SYSFS_FILE_STATUS,3);
+//write_to_file(SYSFS_FILE_STATUS,11);
 unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;

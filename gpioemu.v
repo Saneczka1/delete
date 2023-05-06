@@ -143,10 +143,7 @@ always @(posedge clk) begin
         end
         DONE: begin
 		done <= 1'b1;
-           
-				
                 operation_count <= operation_count + 1;
-           
         end
     endcase
 end

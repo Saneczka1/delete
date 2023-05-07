@@ -147,7 +147,7 @@ always @(posedge clk) begin
            
 				B = 2'b11;
                 operation_count <= operation_count + 1;
-           
+                state <= IDLE;
         end
     endcase
 end

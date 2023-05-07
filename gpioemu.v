@@ -51,7 +51,7 @@ module gpioemu(n_reset,
         gpio_in_s <= 0;
         gpio_out_s <= 0;
         sdata_out_s <= 0;
-        state <= 4;
+        state <= 0;
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
@@ -67,7 +67,7 @@ module gpioemu(n_reset,
 	
 	
 
-    always @(posedge swr) begin   
+    always @(posedge swr) begin   // może być błąd
        
     if (saddress == 16'h03A0 ) begin
         ready <= 1'b0;

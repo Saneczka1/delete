@@ -67,7 +67,7 @@ module gpioemu(n_reset,
 	
 	
 
-    always @(posedge swr) begin   // może być błąd
+    always @(posedge swr) begin   
        
     if (saddress == 16'h03A0 ) begin
         ready <= 1'b0;

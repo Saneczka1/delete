@@ -3,7 +3,7 @@
 #include <linux/ioport.h>
 #include <asm/errno.h>
 #include <asm/io.h>
-#include <ctype.h>
+
 MODULE_INFO(intree, "Y");
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Aleksander Pruszkowski");

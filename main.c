@@ -117,8 +117,8 @@ while (read != 3 && readw == 0 && readl == 0){
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
 }
-
- while (1) {
+/*
+ while () {
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);

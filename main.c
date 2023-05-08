@@ -94,7 +94,7 @@ struct multiplication_result {
   unsigned int b;
 };
 
-struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
+/*struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);

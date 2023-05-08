@@ -102,20 +102,21 @@ unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
 unsigned int readb = 0;
-/*
+do{
     read = read_from_file(SYSFS_FILE_STATUS);
     read = read_from_file(SYSFS_FILE_STATUS);
 
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
-    readb = read_from_file(SYSFS_FILE_STATUS);
+    readb = read_from_file(SYSFS_FILE_STATUS);}
 while (read != 3 && readw == 0 && readl == 0){
 
-    read = read_from_file(SYSFS_FILE_STATUS);
+
+  
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
-}*/
+}
 
  while (1) {
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);

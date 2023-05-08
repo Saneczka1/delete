@@ -124,6 +124,7 @@ while (read != 3 && readw != 0 && readl != 0);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
 */
+/*
 int l=0;
  while (l==0) {
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);
@@ -155,7 +156,7 @@ struct multiplication_result result;
 //printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
 //printf("A1=0x%x, A2=0x%x", arg1, arg2);
 return result;
-}
+}*/
 
 int random_in_range(int min, int max) {
     return min + rand() % (max - min + 1);
@@ -201,8 +202,12 @@ unsigned int ones[3] ={3,2,2};*/
 
 
 int k=0;
-multiply(3,4);
 
+for(int i=0; i<500; i++)
+{
+    readw = read_from_file(SYSFS_FILE_RES);
+    printf(readw);
+}
 /*for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)

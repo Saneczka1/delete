@@ -129,7 +129,7 @@ while (read != 3 && readw == 0 && readl == 0){
     }
 
 
-} 
+//} 
 
 struct multiplication_result result;
   result.w = readw;

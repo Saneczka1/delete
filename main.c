@@ -145,8 +145,7 @@ unsigned int results[3] = { 0xc,24,18 };
 unsigned int ones[3] ={3,2,2};*/
 for(int i=0; i<500; i++){
 if( multiply(values[i].a1,values[i].a2) != values[i].w && multiply(values[i].a1,values[i].a2) != values[i].num_ones)
-prinf("Error at index %d: a1: 0x%X, a2: 0x%X, expected w: 0x%X, actual w: 0x%X\n",
-                   i, values[i].a1, values[i].a2, values[i].w,readw);
+prinf("ERROR");
 return i+1;
 }
 return 0;

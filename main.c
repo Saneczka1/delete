@@ -87,7 +87,13 @@ void write_to_file(char *filePath, unsigned int input){
 /*operacja mnożenia -  to wczytywanie danych od użytkownika
 i wczytywanie outputów*/
 
-unsigned int multiply(unsigned int arg1, unsigned int arg2){
+struct multiplication_result {
+  unsigned int w;
+  unsigned int l;
+  unsigned int b;
+};
+
+struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
 unsigned int read = 0;
@@ -96,15 +102,23 @@ unsigned int readl = 0;
 unsigned int readb = 0;
 do{
 read = read_from_file(SYSFS_FILE_STATUS);
-}
-while(read != 3);
 readw = read_from_file(SYSFS_FILE_RES);
 readl = read_from_file(SYSFS_FILE_ONES);
-readb = read_from_file(SYSFS_FILE_STATUS);
+}
+while(readw != 0 && readl !=0 && read !=3){
+readw = read_from_file(SYSFS_FILE_RES);
+readl = read_from_file(SYSFS_FILE_ONES);
+readb = read_from_file(SYSFS_FILE_STATUS);}
 
-printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
+
+struct multiplication_result result;
+  result.w = readw;
+  result.l = readl;
+  result.b = readb;
+
+//printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
 //printf("A1=0x%x, A2=0x%x", arg1, arg2);
-return read;
+return result;
 }
 
 int random_in_range(int min, int max) {
@@ -113,9 +127,13 @@ int random_in_range(int min, int max) {
 
 int count_ones(unsigned int num) {
     int count = 0;
-    while (num) {
-        count += num & 1;
-        num >>= 1;
+    char binary[33]; 
+    sprintf(binary, "%032lX", num);
+   
+    for (int i = 0; i < 32; i++) {
+        if (binary[i] == '1') {
+            count++;
+        }
     }
     return count;
 }
@@ -144,8 +162,10 @@ unsigned int args2[3] = { 4, 3, 3};
 unsigned int results[3] = { 0xc,24,18 };
 unsigned int ones[3] ={3,2,2};*/
 for(int i=0; i<500; i++){
+struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( multiply(values[i].a1,values[i].a2) != values[i].w && multiply(values[i].a1,values[i].a2) != values[i].num_ones)
-printf("ERROR");
+printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, result = %u\n", 
+        [i].a1, values[i].a2, result.w, values.num_ones, result););
 return i+1;
 }
 return 0;

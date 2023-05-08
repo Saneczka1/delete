@@ -109,7 +109,7 @@ do{
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);}
-while (read != 3 && readw == 0 && readl == 0){
+while (read != 3 && readw == 0 && readl == 0);
 
 
   
@@ -126,11 +126,11 @@ while (read != 3 && readw == 0 && readl == 0){
         if (read == 3 && readw != 0 && readl != 0) break;
        /* readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);*/
+        readb = read_from_file(SYSFS_FILE_STATUS);
     }
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);
+        readb = read_from_file(SYSFS_FILE_STATUS);*/
 
 
 //} 

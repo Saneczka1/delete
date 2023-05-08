@@ -130,11 +130,11 @@ int l=0;
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
-        if (read == 3 && readw != 0 && readl != 0) break;
+        if (read == 3 && readw != 0 && readl != 0){
         readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
         readb = read_from_file(SYSFS_FILE_STATUS);
-        l++;
+        l++;}
     }
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);

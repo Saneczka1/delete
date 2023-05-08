@@ -55,7 +55,7 @@ exit(1);
 int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
         buffer[n]='\0';
-        printf("%s", buffer); 
+       // printf("%s", buffer); 
         close(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
@@ -104,17 +104,10 @@ unsigned int readl = 0;
 unsigned int readb = 0;
 do{
     read = read_from_file(SYSFS_FILE_STATUS);
-    read = read_from_file(SYSFS_FILE_STATUS);
-
+    
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
-    readb = read_from_file(SYSFS_FILE_STATUS);
-    
-    printf("Read status: %u\n", read);
-    printf("Read w: %u\n", readw);
-    printf("Read l: %u\n", readl);
-    printf("Read b: %u\n", readb);
-    }
+    readb = read_from_file(SYSFS_FILE_STATUS);}
 while (read != 3 && readw != 0 && readl != 0);
 
 
@@ -191,19 +184,13 @@ int test_module(){
 unsigned int args2[3] = { 4, 3, 3};
 unsigned int results[3] = { 0xc,24,18 };
 unsigned int ones[3] ={3,2,2};*/
-
-
-
 int k=0;
-multiply(3,4);
-/*
 for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
 printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, resultw = %u,resultw = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 k++;
 }
-*/
 return k;
 }
 

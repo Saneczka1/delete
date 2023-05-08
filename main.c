@@ -61,7 +61,7 @@ if(n>0){
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
         close(file);
-        return 404
+        return 404;
     }
 }
 
@@ -102,9 +102,10 @@ unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
 unsigned int readb = 0;
+/*
+    read = read_from_file(SYSFS_FILE_STATUS);
+    read = read_from_file(SYSFS_FILE_STATUS);
 
-    read = read_from_file(SYSFS_FILE_STATUS);
-    read = read_from_file(SYSFS_FILE_STATUS);
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
@@ -114,7 +115,20 @@ while (read != 3 && readw == 0 && readl == 0){
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
-}
+}*/
+
+ while (1) {
+        unsigned int read = read_from_file(SYSFS_FILE_STATUS);
+        unsigned int readw = read_from_file(SYSFS_FILE_RES);
+        unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
+        unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
+        if (read == 3 && readw != 0 && readl != 0) break;
+        readw = read_from_file(SYSFS_FILE_RES);
+        readl = read_from_file(SYSFS_FILE_ONES);
+        readb = read_from_file(SYSFS_FILE_STATUS);
+    }
+
+
 } 
 
 struct multiplication_result result;

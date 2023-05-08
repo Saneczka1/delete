@@ -56,12 +56,12 @@ int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
         buffer[n]='\0';
         printf("%s", buffer); 
+        close(file);
+        return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
+        close(file);
     }
-
-close(file);
-return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
 }
 
 
@@ -107,14 +107,46 @@ printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,rea
 return read;
 }
 
+int random_in_range(int min, int max) {
+    return min + rand() % (max - min + 1);
+}
+
+int count_ones(unsigned int num) {
+    int count = 0;
+    while (num) {
+        count += num & 1;
+        num >>= 1;
+    }
+    return count;
+}
 
 int test_module(){
-unsigned int args1[3] = { 3, 0xc, 8};
+
+    typedef struct {
+    unsigned int a1;
+    unsigned int a2;
+    unsigned int w;
+    int num_ones;
+} MyStruct;
+
+
+
+ MyStruct values[500];
+
+ for (int i = 0; i < 500; i++) {
+        values[i].a1 = random_in_range(0, 1048575); // 20 битов
+        values[i].a2 = random_in_range(0, 1048575); // 20 битов
+        values[i].w = values[i].a1 * values[i].a2;
+        values[i].num_ones = count_ones(values[i].w);}
+
+/*unsigned int args1[3] = { 3, 0xc, 8};
 unsigned int args2[3] = { 4, 3, 3};
 unsigned int results[3] = { 0xc,24,18 };
-unsigned int ones[3] ={3,2,2};
-for(int i=0; i<3; i++){
-if( multiply(args1[i],args2[i]) != results[i] && multiply(args1[i],args2[i]) != ones[i])
+unsigned int ones[3] ={3,2,2};*/
+for(int i=0; i<500; i++){
+if( multiply(values[i].a1,values[i].a2) != values[i].W && multiply(values[i].a1,values[i].a2) != values[i].num_ones)
+"Error at index %d: a1: 0x%X, a2: 0x%X, expected w: 0x%X, actual w: 0x%X\n",
+                   i, values[i].a1, values[i].a2, result, values[i].w
 return i+1;
 }
 return 0;

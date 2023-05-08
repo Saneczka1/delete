@@ -22,7 +22,7 @@ MODULE_VERSION("0.01");
 #define SYKT_GPIO_ADDR_SPACE (baseptr) 
 #define SYKT_GPIO_ARG2_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000388)
 #define SYKT_GPIO_CTRL_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A1)
-#define SYKT_GPIO_ARG1_ADDR (SYKT_GPIO_ADDR_SPACE+0x0000037F0)
+#define SYKT_GPIO_ARG1_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000380)
 #define SYKT_GPIO_RESULT_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000390)
 #define SYKT_GPIO_ONES_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000398)
 #define SYKT_GPIO_STATUS_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A0)
@@ -132,7 +132,11 @@ static struct kobj_attribute rabb_attr = __ATTR(rabb, 0660, rabb_show, rabb_stor
 int my_init_module(void){
 printk(KERN_INFO "Init my sykt module.\n");
 baseptr=ioremap(SYKT_MEM_BASE_ADDR, SYKT_MEM_SIZE);
+
 kobj_ref = kobject_create_and_add("sykt",kernel_kobj);
+if (!kobj_ref) {
+    printk(KERN_INFO "Failed to create kobject.\n");
+}
 
 if (sysfs_create_file(kobj_ref, &raba1_attr.attr))
 {

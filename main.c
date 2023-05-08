@@ -202,7 +202,7 @@ unsigned int ones[3] ={3,2,2};*/
 
 
 int k=0;
-
+unsigned int readw = 0;
 for(int i=0; i<500; i++)
 {
     readw = read_from_file(SYSFS_FILE_RES);

@@ -100,15 +100,12 @@ unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
 unsigned int readb = 0;
-do{
-read = read_from_file(SYSFS_FILE_STATUS);
-readw = read_from_file(SYSFS_FILE_RES);
-readl = read_from_file(SYSFS_FILE_ONES);
-}
-while(readw != 0 && readl !=0 && read !=3){
-readw = read_from_file(SYSFS_FILE_RES);
-readl = read_from_file(SYSFS_FILE_ONES);
-readb = read_from_file(SYSFS_FILE_STATUS);}
+do {
+    read = read_from_file(SYSFS_FILE_STATUS);
+    readw = read_from_file(SYSFS_FILE_RES);
+    readl = read_from_file(SYSFS_FILE_ONES);
+    readb = read_from_file(SYSFS_FILE_STATUS);
+} while (read != 3 && readw == 0 && readl == 0);
 
 
 struct multiplication_result result;
@@ -164,9 +161,8 @@ unsigned int ones[3] ={3,2,2};*/
 int k=0;
 for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
-if( multiply(values[i].a1,values[i].a2) != values[i].w && multiply(values[i].a1,values[i].a2) != values[i].num_ones)
-printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, result = %u\n", 
-        [i].a1, values[i].a2, result.w, values[i].num_ones, result);
+if( result.w != values[i].w && result.l != values[i].num_ones)
+printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, result = %u\n", values[i].a1, values[i].a2, result.w, values[i].num_ones, result);
 k++;
 }
 return k;

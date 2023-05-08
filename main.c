@@ -162,7 +162,7 @@ int k=0;
 for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
-printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, result = %u\n", values[i].a1, values[i].a2, result.w, values[i].num_ones, result);
+printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, resultw = %u,resultw = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 k++;
 }
 return k;

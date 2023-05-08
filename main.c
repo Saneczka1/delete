@@ -161,14 +161,15 @@ int test_module(){
 unsigned int args2[3] = { 4, 3, 3};
 unsigned int results[3] = { 0xc,24,18 };
 unsigned int ones[3] ={3,2,2};*/
+int k=0;
 for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( multiply(values[i].a1,values[i].a2) != values[i].w && multiply(values[i].a1,values[i].a2) != values[i].num_ones)
 printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, result = %u\n", 
-        [i].a1, values[i].a2, result.w, values.num_ones, result););
-return i+1;
+        [i].a1, values[i].a2, result.w, values[i].num_ones, result);
+k++;
 }
-return 0;
+return k;
 }
 
 

@@ -29,7 +29,7 @@ module gpioemu(n_reset,
     reg [31:0]      gpio_out_s;
 
     reg unsigned [48:0] result;
-	reg unsigned [48:0] temp_result;
+    reg unsigned [48:0] temp_result;
     reg unsigned[23:0] A2;
     reg unsigned[23:0] A1;
     reg unsigned[31:0] W;
@@ -52,7 +52,7 @@ module gpioemu(n_reset,
         gpio_in_s <= 0;
         gpio_out_s <= 0;
         sdata_out_s <= 0;
-        state <= 0;
+        state <= 4;
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
@@ -61,7 +61,6 @@ module gpioemu(n_reset,
         A1 <= 0;
         A2 <= 0;
         L <= 0;
-		temp_result =0;
         B = 2'b11;
 		done <=1'b0;
     end
@@ -75,11 +74,11 @@ module gpioemu(n_reset,
         ready <= 1'b0;
 		done <=0;
 		valid =1'b1;
-	
+		B = 2'b01;
         state <= IDLE;
         gpio_out_s <= gpio_out_s + 1; //licznik
     end
-    if (saddress == 16'h380) // adres pierwszego argumentu
+    if (saddress == 16'h37F) // adres pierwszego argumentu
         A1 <= sdata_in[23:0];
     else if (saddress == 16'h0388) // adres drugiego argumentu
         A2 <= sdata_in[23:0];
@@ -150,7 +149,7 @@ always @(posedge clk) begin
         end
         DONE: begin
 		done <= 1'b1;
-		state<=IDLE;
+		
            
 				B = 2'b11;
                 operation_count <= operation_count + 1;

@@ -47,7 +47,7 @@ return 0;
 unsigned int read_from_file(char *filePath){
 char buffer[MAX_BUFFER];
 
-int file=open(filePath, O_RDONLY);
+int file=open(filePath, O_RDONLY); //moze tu błąd? może nie o_rdonly
 if(file<0){
 printf("Open %s - error number %d\n", filePath, errno);
 exit(1);
@@ -55,7 +55,7 @@ exit(1);
 int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
         buffer[n]='\0';
-       // printf("%s", buffer); 
+        //printf("%s", buffer); 
         close(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
@@ -102,12 +102,20 @@ unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
 unsigned int readb = 0;
+/*
 do{
     read = read_from_file(SYSFS_FILE_STATUS);
     
+
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
-    readb = read_from_file(SYSFS_FILE_STATUS);}
+    readb = read_from_file(SYSFS_FILE_STATUS);
+    
+    printf("Read status: %u\n", read);
+    printf("Read w: %u\n", readw);
+    printf("Read l: %u\n", readl);
+    printf("Read b: %u\n", readb);
+    }
 while (read != 3 && readw != 0 && readl != 0);
 
 
@@ -115,24 +123,25 @@ while (read != 3 && readw != 0 && readl != 0);
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
-//}
-/*
- while () {
+*/
+int l=0;
+ while (l==0) {
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
         if (read == 3 && readw != 0 && readl != 0) break;
-       /* readw = read_from_file(SYSFS_FILE_RES);
+        readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
         readb = read_from_file(SYSFS_FILE_STATUS);
+        l++;
     }
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);*/
+        readb = read_from_file(SYSFS_FILE_STATUS);
 
 
-//} 
+
 
 struct multiplication_result result;
   result.w = readw;
@@ -184,13 +193,19 @@ int test_module(){
 unsigned int args2[3] = { 4, 3, 3};
 unsigned int results[3] = { 0xc,24,18 };
 unsigned int ones[3] ={3,2,2};*/
+
+
+
 int k=0;
+multiply(3,4);
+/*
 for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
 printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, resultw = %u,resultw = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 k++;
 }
+*/
 return k;
 }
 

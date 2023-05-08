@@ -61,6 +61,7 @@ if(n>0){
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
         close(file);
+        return 404
     }
 }
 
@@ -94,23 +95,26 @@ struct multiplication_result {
 };
 
 struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
+
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
 unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
 unsigned int readb = 0;
-read = read_from_file(SYSFS_FILE_STATUS);
+
+    read = read_from_file(SYSFS_FILE_STATUS);
     read = read_from_file(SYSFS_FILE_STATUS);
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
-while (read != 3 && readw == 0 && readl == 0){}
+while (read != 3 && readw == 0 && readl == 0){
 
     read = read_from_file(SYSFS_FILE_STATUS);
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
+}
 } 
 
 struct multiplication_result result;
@@ -154,8 +158,8 @@ int test_module(){
  MyStruct values[500];
 
  for (int i = 0; i < 500; i++) {
-        values[i].a1 = random_in_range(0, 1048575); // 20 битов
-        values[i].a2 = random_in_range(0, 1048575); // 20 битов
+        values[i].a1 = random_in_range(0, 1048575); // 20 
+        values[i].a2 = random_in_range(0, 1048575); // 20 
         values[i].w = values[i].a1 * values[i].a2;
         values[i].num_ones = count_ones(values[i].w);}
 

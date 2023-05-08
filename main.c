@@ -205,7 +205,7 @@ int k=0;
 unsigned int readw = 0;
 for(int i=0; i<500; i++)
 {
-    readw = read_from_file(SYSFS_FILE_STATUS);
+    readw = read_from_file(SYSFS_FILE_RES);
     printf(readw);
 }
 /*for(int i=0; i<500; i++){

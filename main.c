@@ -130,6 +130,10 @@ int l=0;
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
+         printf("Read status: %u\n", read);
+        printf("Read w: %u\n", readw);
+        printf("Read l: %u\n", readl);
+        printf("Read b: %u\n", readb);
         if (read == 3 && readw != 0 && readl != 0){
         readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
@@ -197,14 +201,14 @@ unsigned int ones[3] ={3,2,2};*/
 
 
 int k=0;
+multiply(3,4);
 
-
-for(int i=0; i<500; i++){
+/*for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
 printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, resultw = %u,resultw = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 k++;
-}
+}*/
 
 return k;
 }

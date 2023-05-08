@@ -44,13 +44,13 @@ static int rabb;
 //show odczyt z modułu
 static bool is_hex(const char *buf, size_t count) {
     for (size_t i = 0; i < count; ++i) {
-        if (!isxdigit(buf[i])) {
+        char c = buf[i];
+        if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
             return false;
         }
     }
     return true;
 }
-
 
 static ssize_t raba1_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
 {

@@ -206,7 +206,7 @@ unsigned int readw = 0;
 for(int i=0; i<500; i++)
 {
     readw = read_from_file(SYSFS_FILE_STATUS);
-    printf(readw);
+    printf("%u", readw);
 }
 /*for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);

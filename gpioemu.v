@@ -165,14 +165,14 @@ always @(posedge clk) begin
         DONE: begin
 		done = 1'b1;		
 		B = 2'b11;
-        operation_count <= operation_count + 1;
+        gpio_out_s <= gpio_out_s + 1;
 		state<=IDLE;
            
         end
     endcase
 end
 
-assign gpio_out = {16'h0, operation_count[15:0]};
-assign gpio_in_s_insp = gpio_in_s;
 assign sdata_out = sdata_out_s;
+assign gpio_out = {16'h0, gpio_out_s[15:0]};
+
 endmodule

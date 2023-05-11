@@ -127,7 +127,8 @@ always @(posedge clk) begin
 			ready <= 0;
 			result =49'b0;
 			temp_result ={25'h0, A1};
-            for (integer i = 0; i < 24; i = i + 1) begin
+            for (integer i = 0; i < 24; i = i + 1)
+			begin
 			if(i!=1)begin
 			      temp_result= temp_result<<1;
 				  end
@@ -136,8 +137,8 @@ always @(posedge clk) begin
                 end
             end
 			valid = (result[48:32] == 0);
-			W = result [31:0];
 			B ={ready,valid};
+			W = result [31:0];
             state <= COUNT_ONES;
         end
         COUNT_ONES: begin

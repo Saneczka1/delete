@@ -82,7 +82,7 @@ module gpioemu(n_reset,
 			if (saddress == 16'h03A0 ) 
 		begin
 			ready <= 1'b0;
-			done <=0;
+			done =0;
 			valid =1'b1;
 			B = 2'b01;
 			state <= IDLE;
@@ -130,7 +130,7 @@ always @(posedge clk) begin
 			ready <= 1'b0;
 			valid =1'b1;
 			B = 2'b01;
-			done <= 0;
+			done = 0;
             tmp_ones_count = 0;
             state <= MULT;
         end

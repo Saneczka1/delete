@@ -104,16 +104,16 @@ begin
     if (saddress == 16'h390) 
 	
        if (done) begin
-	    sdata_out_s <= W[31:0];
+	    gpio_out_s <= W[31:0];
         end
     
 		else if (saddress == 16'h3A0) 
 		
-			sdata_out_s <= {30'b0, B};																	
+			gpio_out_s <= {30'b0, B};																	
 	
 		else if (saddress == 16'h398) 
 		
-			sdata_out_s <= {8'h0, L};
+			gpio_out_s <= {8'h0, L};
 		
 		else 
 		
@@ -176,7 +176,7 @@ always @(posedge clk) begin
 end
 
 //assign gpio_out = {16'h0, operation_count[15:0]};
-assign gpio_in_s_insp = gpio_in_s;
-assign sdata_out = sdata_out_s;
-assign gpio_out =sdata_out;
+//assign gpio_in_s_insp = gpio_in_s;
+//assign sdata_out = sdata_out_s;
+//assign gpio_out =sdata_out;
 endmodule

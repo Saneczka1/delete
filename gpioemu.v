@@ -2,7 +2,6 @@
 /* verilator lint_off MULTIDRIVEN */
 /* verilator lint_off BLKSEQ */
 /* verilator lint_off WIDTH */
-/* verilator lint_off UNDRIVEN */
 module gpioemu(n_reset,
     saddress[15:0], srd, swr,
     sdata_in[31:0], sdata_out[31:0],
@@ -55,7 +54,7 @@ module gpioemu(n_reset,
         gpio_in_s <= 0;
         gpio_out_s <= 0;
         sdata_out_s <= 0;
-		
+	
 		valid =1;
         state <= 0;
         result =49'b0;
@@ -67,7 +66,7 @@ module gpioemu(n_reset,
         A2 <= 0;
         L = 0;
         B = 2'b11;
-		done =1'b0;
+		done <=1'b0;
     end
 	
 	always @(posedge gpio_latch)
@@ -81,13 +80,13 @@ module gpioemu(n_reset,
 			if (saddress == 16'h03A0 ) 
 		begin
 			ready <= 1'b0;
-			done =0;
+			done <=0;
 			valid =1'b1;
 			B = 2'b01;
 			state <= IDLE;
 			gpio_out_s <= gpio_out_s + 1; //licznik
 		end
-			if (saddress == 16'h0380)
+			if (saddress == 16'h037F)
 			begin	// adres pierwszego argumentu
 			A1 <= sdata_in;
 			end
@@ -102,9 +101,9 @@ always @(posedge srd)
 begin
     if (saddress == 16'h0390) 
 	
-       //if (done) begin
+      // if (done) begin
 	    sdata_out_s <= W[31:0];
-      //  end
+        //end
     
 		else if (saddress == 16'h03A0) 
 		
@@ -129,7 +128,7 @@ always @(posedge clk) begin
 			ready <= 1'b0;
 			valid =1'b1;
 			B = 2'b01;
-			done = 0;
+			done <= 0;
             tmp_ones_count = 0;
             state <= MULT;
         end
@@ -175,7 +174,7 @@ always @(posedge clk) begin
 end
 
 //assign gpio_out = {16'h0, operation_count[15:0]};
-//assign gpio_in_s_insp = gpio_in_s;
-//assign sdata_out = sdata_out_s;
-assign gpio_out =gpio_out_s;
+assign gpio_in_s_insp = gpio_in_s;
+assign sdata_out = sdata_out_s;
+
 endmodule

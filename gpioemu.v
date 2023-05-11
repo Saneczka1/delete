@@ -1,7 +1,6 @@
 /* verilator lint_off UNUSED */
 /* verilator lint_off MULTIDRIVEN */
 /* verilator lint_off BLKSEQ */
-/* verilator lint_off UNDRIVEN */
 module gpioemu(n_reset,
     saddress[15:0], srd, swr,
     sdata_in[31:0], sdata_out[31:0],
@@ -173,7 +172,7 @@ always @(posedge clk) begin
     endcase
 end
 
-assign sdata_out = sdata_out_s;
 assign gpio_out = {16'h0, gpio_out_s[15:0]};
-
+assign gpio_in_s_insp = gpio_in_s;
+assign sdata_out = sdata_out_s;
 endmodule

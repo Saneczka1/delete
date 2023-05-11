@@ -136,7 +136,7 @@ always @(posedge clk) begin
 			temp_result ={25'h0, A1};
             for (integer i = 0; i < 24; i = i + 1)
 			begin
-			if(i!=0)begin
+			if(i!=1)begin
 			      temp_result= temp_result<<1;
 				  end
                 if (A2[i]) begin
@@ -172,7 +172,7 @@ always @(posedge clk) begin
 end
 
 assign gpio_out = {16'h0, operation_count[15:0]};
-//assign gpio_in_s_insp = gpio_in_s;
+assign gpio_in_s_insp = gpio_in_s;
 assign sdata_out = sdata_out_s;
 //assign gpio_out =gpio_out_s;
 endmodule

@@ -146,7 +146,7 @@ static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,cons
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
-        sscanf(buf,"%x",&ctrl);
+        sscanf(buf,"%x",&rabb);
 		writel(rabb, SYKT_GPIO_STATUS_ADDR);
         return count;
 }

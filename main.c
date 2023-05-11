@@ -200,7 +200,7 @@ int test_module(){
 
 
 
-multiply('z','b');
+
 int k=0;
 /*
 unsigned int readw = 0;
@@ -209,12 +209,12 @@ for(int i=0; i<500; i++)
     readw = read_from_file(SYSFS_FILE_RES);
     printf("%u", readw);
 }*/
-/*for(int i=0; i<50; i++){
+for(int i=0; i<50; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
 printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, resultw = %u,resultl = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 k++;
-}*/
+}
 
 return k;
 }

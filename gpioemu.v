@@ -68,51 +68,59 @@ module gpioemu(n_reset,
 		done <=1'b0;
     end
 	
-	
+	always @(posedge gpio_latch)
+	begin
+		gpio_in_s <= gpio_in;
+	end
 	
 
     always @(posedge swr) 
 	begin   // może być błąd
-       if (saddress == 16'h03A0 ) begin
+		if (saddress == 16'h03A0 ) 
+		begin
         ready <= 1'b0;
 		done <=0;
 		valid =1'b1;
 		B = 2'b01;
         state <= IDLE;
         gpio_out_s <= gpio_out_s + 1; //licznik
-    end
-    if (saddress == 16'h37F)
-begin	// adres pierwszego argumentu
-        A1 <= sdata_in[23:0];
 		end
+			if (saddress == 16'h37F)
+			begin	// adres pierwszego argumentu
+			A1 <= sdata_in[23:0];
+			end
     else if (saddress == 16'h0388)begin // adres drugiego argumentu
-        A2 <= sdata_in[23:0];
+		A2 <= sdata_in[23:0];
 		end
-end
+	end
 
 
 
 always @(posedge srd) 
 begin
-    if (saddress == 16'h390) begin
-        if (done) begin
+    if (saddress == 16'h390) 
+	
+      // if (done) begin
 	    sdata_out_s <= W[31:0];
-        end
-    end 
-	else if (saddress == 16'h3A0) begin
-        sdata_out_s <= {30'b0, B};																	
-    end 
-	else if (saddress == 16'h398) begin
-        sdata_out_s <= {8'h0, L};
-    end 
-	else begin
-        sdata_out_s <= 0;
-    end
+        //end
+    
+		else if (saddress == 16'h3A0) 
+		
+			sdata_out_s <= {30'b0, B};																	
+	
+		else if (saddress == 16'h398) 
+		
+			sdata_out_s <= {8'h0, L};
+		
+		else 
+		
+			sdata_out_s <= 'h0;
+		
 end
 
 
 
-always @(posedge clk) begin
+always @(posedge clk) begin 
     case (state)
         IDLE: begin
             result = 0;
@@ -155,7 +163,7 @@ always @(posedge clk) begin
             state <= DONE;
         end
         DONE: begin
-		done <= 1'b1;		
+		done = 1'b1;		
 		B = 2'b11;
         operation_count <= operation_count + 1;
 		state<=IDLE;

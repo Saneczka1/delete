@@ -6,6 +6,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Vgpioemu.h"
 #define MAX_BUFFER 1024
 
 //definicja plików

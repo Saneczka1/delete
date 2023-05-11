@@ -3,6 +3,7 @@
 #include <linux/ioport.h>
 #include <asm/errno.h>
 #include <asm/io.h>
+#include "Vgpioemu.h"
 
 MODULE_INFO(intree, "Y");
 MODULE_LICENSE("GPL");

@@ -76,21 +76,21 @@ module gpioemu(n_reset,
 
     always @(posedge swr) 
 	begin   // może być błąd
-		if (saddress == 16'h03A0 ) 
+			if (saddress == 16'h03A0 ) 
 		begin
-        ready <= 1'b0;
-		done <=0;
-		valid =1'b1;
-		B = 2'b01;
-        state <= IDLE;
-        gpio_out_s <= gpio_out_s + 1; //licznik
+			ready <= 1'b0;
+			done <=0;
+			valid =1'b1;
+			B = 2'b01;
+			state <= IDLE;
+			gpio_out_s <= gpio_out_s + 1; //licznik
 		end
 			if (saddress == 16'h37F)
 			begin	// adres pierwszego argumentu
-			A1 <= sdata_in[23:0];
+			A1 <= sdata_in;
 			end
     else if (saddress == 16'h0388)begin // adres drugiego argumentu
-		A2 <= sdata_in[23:0];
+		A2 <= sdata_in;
 		end
 	end
 
@@ -172,7 +172,8 @@ always @(posedge clk) begin
     endcase
 end
 
-assign gpio_out = {16'h0, operation_count[15:0]};
+//assign gpio_out = {16'h0, operation_count[15:0]};
 assign gpio_in_s_insp = gpio_in_s;
 assign sdata_out = sdata_out_s;
+assign gpio_out =sdata_out;
 endmodule

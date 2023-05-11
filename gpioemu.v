@@ -179,5 +179,5 @@ end
 //assign gpio_out = {16'h0, operation_count[15:0]};
 //assign gpio_in_s_insp = gpio_in_s;
 //assign sdata_out = sdata_out_s;
-//assign gpio_out =sdata_out;
+assign gpio_out =gpio_out_s;
 endmodule

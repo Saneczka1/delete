@@ -200,7 +200,7 @@ int test_module(){
 
 
 
-multiply(z,b);
+multiply('z','b');
 int k=0;
 /*
 unsigned int readw = 0;

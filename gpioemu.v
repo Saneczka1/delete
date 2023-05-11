@@ -56,8 +56,6 @@ module gpioemu(n_reset,
         gpio_out_s <= 0;
         sdata_out_s <= 0;
 		
-     
-	
 		valid =1;
         state <= 0;
         result =49'b0;
@@ -104,9 +102,9 @@ always @(posedge srd)
 begin
     if (saddress == 16'h390) 
 	
-       if (done) begin
+       //if (done) begin
 	    gpio_out_s <= W[31:0];
-        end
+      //  end
     
 		else if (saddress == 16'h3A0) 
 		

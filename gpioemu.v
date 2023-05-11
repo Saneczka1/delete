@@ -52,7 +52,7 @@ module gpioemu(n_reset,
         gpio_in_s <= 0;
         gpio_out_s <= 0;
         sdata_out_s <= 0;
-		ready =1;
+	
 		valid =1;
         state <= 4;
         result =49'b0;

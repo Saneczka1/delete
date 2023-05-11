@@ -70,10 +70,7 @@ module gpioemu(n_reset,
 		done =1'b0;
     end
 	
-	always @(posedge gpio_latch)
-	begin
-		gpio_in_s <= gpio_in;
-	end
+	
 	
 
     always @(posedge swr) 

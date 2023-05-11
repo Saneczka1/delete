@@ -48,7 +48,8 @@ module gpioemu(n_reset,
               COUNT_ONES = 2,
               DONE = 3;
 
-    always @(negedge n_reset) begin
+    always @(negedge n_reset)
+	begin
         gpio_in_s <= 0;
         gpio_out_s <= 0;
         sdata_out_s <= 0;
@@ -70,9 +71,9 @@ module gpioemu(n_reset,
 	
 	
 
-    always @(posedge swr) begin   // może być błąd
-       
-    if (saddress == 16'h03A0 ) begin
+    always @(posedge swr) 
+	begin   // może być błąd
+       if (saddress == 16'h03A0 ) begin
         ready <= 1'b0;
 		done <=0;
 		valid =1'b1;
@@ -91,7 +92,8 @@ end
 
 
 
-always @(posedge srd) begin
+always @(posedge srd) 
+begin
     if (saddress == 16'h390) begin
         if (done) begin
 		W = result[31:0];
@@ -156,7 +158,7 @@ always @(posedge clk) begin
 		done <= 1'b1;		
 		B = 2'b11;
         operation_count <= operation_count + 1;
-		state<=0;
+		state<=IDLE;
            
         end
     endcase

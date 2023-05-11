@@ -101,9 +101,9 @@ always @(posedge srd)
 begin
     if (saddress == 16'h390) 
 	
-      // if (done) begin
+       if (done) begin
 	    sdata_out_s <= W[31:0];
-        //end
+        end
     
 		else if (saddress == 16'h3A0) 
 		

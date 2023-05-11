@@ -52,6 +52,8 @@ module gpioemu(n_reset,
         gpio_in_s <= 0;
         gpio_out_s <= 0;
         sdata_out_s <= 0;
+		ready =1;
+		valid =1;
         state <= 4;
         result =49'b0;
 		W = 32'b0;
@@ -78,10 +80,13 @@ module gpioemu(n_reset,
         state <= IDLE;
         gpio_out_s <= gpio_out_s + 1; //licznik
     end
-    if (saddress == 16'h37F) // adres pierwszego argumentu
+    if (saddress == 16'h37F)
+begin	// adres pierwszego argumentu
         A1 <= sdata_in[23:0];
-    else if (saddress == 16'h0388) // adres drugiego argumentu
+		end
+    else if (saddress == 16'h0388)begin // adres drugiego argumentu
         A2 <= sdata_in[23:0];
+		end
 end
 
 

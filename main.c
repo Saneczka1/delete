@@ -137,9 +137,9 @@ int l=0;
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);
       //  if (read == 3 && readw != 0 ){
-        if (read == 3  ){
+        if (read == 3 ){
         l++;}
-        l++;}
+        
     }
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);

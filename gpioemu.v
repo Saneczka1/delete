@@ -96,15 +96,14 @@ always @(posedge srd)
 begin
     if (saddress == 16'h390) begin
         if (done) begin
-		W = result[31:0];
-            sdata_out_s <= W[31:0];
+	    sdata_out_s <= W[31:0];
         end
     end 
 	else if (saddress == 16'h3A0) begin
         sdata_out_s <= {30'b0, B};																	
     end 
 	else if (saddress == 16'h398) begin
-        sdata_out_s <= {8'h0, tmp_ones_count};
+        sdata_out_s <= {8'h0, L};
     end 
 	else begin
         sdata_out_s <= 0;

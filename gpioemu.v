@@ -103,20 +103,20 @@ begin
     if (saddress == 16'h390) 
 	
        //if (done) begin
-	    gpio_out_s <= W[31:0];
+	    sdata_out_s <= W[31:0];
       //  end
     
 		else if (saddress == 16'h3A0) 
 		
-			gpio_out_s <= {30'b0, B};																	
+			sdata_out_s <= {30'b0, B};																	
 	
 		else if (saddress == 16'h398) 
 		
-			gpio_out_s <= {8'h0, L};
+			sdata_out_s <= {8'h0, L};
 		
 		else 
 		
-			gpio_out_s <= 'h0;
+			sdata_out_s <= 'h0;
 		
 end
 

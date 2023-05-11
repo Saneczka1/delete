@@ -48,7 +48,7 @@ module gpioemu(n_reset,
     localparam IDLE = 0,
               MULT = 1,
               COUNT_ONES = 2,
-              DONE = 3;
+              DONE = 3,
 			  ZEROS = 4;
 
     always @(negedge n_reset)

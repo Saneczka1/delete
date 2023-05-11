@@ -32,7 +32,6 @@ MODULE_VERSION("0.01");
 
 void __iomem *baseptr;
 static struct kobject *kobj_ref;
-static int ctrl;
 static int raba1;
 static int raba2;
 static int rabw;

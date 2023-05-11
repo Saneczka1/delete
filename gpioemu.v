@@ -118,7 +118,7 @@ begin
 		
 		else 
 		
-			sdata_out_s <= 'h0;
+			gpio_out_s <= 'h0;
 		
 end
 

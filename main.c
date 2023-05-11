@@ -124,7 +124,7 @@ while (read != 3 && readw != 0 && readl != 0);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
 */
-
+int k =0;
 int l=0;
  while (l==0) {
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);
@@ -139,7 +139,9 @@ int l=0;
       //  if (read == 3 && readw != 0 ){
         if (read != 0 ){
         l++;}
-        
+         if (k == 10 ){
+        break;}
+        k++;
     }
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);

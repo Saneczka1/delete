@@ -61,7 +61,7 @@ if(n>0){
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
         close(file);
-        return 404;
+        return -404;
     }
 }
 
@@ -137,14 +137,9 @@ int l=0;
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);*/
         if (read == 3 && readw != 0 ){
-        readw = read_from_file(SYSFS_FILE_RES);     //дейсвительно потом же ресет но проверть и остальное
-        readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);
         l++;}
     }
-     readw = read_from_file(SYSFS_FILE_RES);
-        readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);
+     
 
 
 

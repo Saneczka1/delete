@@ -49,7 +49,7 @@ module gpioemu(n_reset,
               MULT = 1,
               COUNT_ONES = 2,
               DONE = 3;
-			  ZEROS =4;
+			  ZEROS = 4;
 
     always @(negedge n_reset)
 	begin

@@ -58,35 +58,18 @@ int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
         buffer[n]='\0';
         
-        fclose(file);
+        close(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
-        fclose(file);
+        close(file);
         exit(3);
     }
 }
 
-
-/*
-
-
 int write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];
-	FILE *file=fopen(filePath, "w");
-	if(file == NULL){
-		 printf("Open %s - error number %d\n", filePath, errno);
-		 exit(6);
-	}
-	snprintf(buffer, MAX_BUFFER, "%x",input);
-	fwrite(buffer, strlen(buffer), 1, file);
-	fclose(file);
-	return 0;
-}
-*/
-
-int write_to_file(char *filePath, unsigned int input){
-	char buffer[MAX_BUFFER];
+    FILE *file=fopen(filePath, "w");
 	int fd_in=open(filePath, O_RDWR); 
 	if(fd_in < 0){  
 		 printf("Open %s - error number %d\n", filePath, errno);
@@ -143,6 +126,7 @@ while (read != 3 && readw != 0 && readl != 0);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
 */
+/*
 int k =0;
 int l=0;
  while (l==0) {
@@ -158,7 +142,7 @@ int l=0;
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);
         printf("Read a1: %u\n", reada1);
-        printf("Read a2: %u\n", read);*/
+        printf("Read a2: %u\n", read);
         if (read == 3 && readw != 0 ){
         l++;
         }
@@ -173,7 +157,7 @@ int l=0;
         readb = read_from_file(SYSFS_FILE_STATUS);
 
 
-
+*/
 
 struct multiplication_result result;
   result.w = readw;

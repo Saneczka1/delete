@@ -70,6 +70,21 @@ if(n>0){
 
 
 
+
+int write_to_file(char *filePath, unsigned int input){
+	char buffer[MAX_BUFFER];
+	FILE *file=fopen(filePath, "w");
+	if(file == NULL){
+		 printf("Open %s - error number %d\n", filePath, errno);
+		 exit(6);
+	}
+	snprintf(buffer, MAX_BUFFER, "%x",input);
+	fwrite(buffer, strlen(buffer), 1, file);
+	fclose(file);
+	return 0;
+}
+/*
+
 void write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];
 	int fd_in=open(filePath, O_RDWR); 
@@ -99,7 +114,7 @@ struct multiplication_result {
 struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
 write_to_file(SYSFS_FILE_WE1,arg1);
-write_to_file(SYSFS_FILE_WE2,arg2);/*
+write_to_file(SYSFS_FILE_WE2,arg2);
 unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
@@ -141,7 +156,7 @@ int l=0;
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);
         printf("Read a1: %u\n", reada1);
-        printf("Read a2: %u\n", reada2);
+        printf("Read a2: %u\n", read);
         if (read == 3 && readw != 0 ){
         l++;
         }

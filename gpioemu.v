@@ -57,7 +57,7 @@ module gpioemu(n_reset,
         sdata_out_s <= 0;
 		
 		valid =1;
-        state <= IDLE;
+        state <= 0;
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
@@ -122,11 +122,23 @@ end
 always @(posedge clk) begin 
     case (state)
         IDLE: begin
+		
+		
+        state <= 0;
+        result =49'b0;
+		W = 32'b0;
+        tmp_ones_count = 0;
+        operation_count <= 0;
+        A1 <= 0;
+        A2 <= 0;
+        L = 0;
+        
+		done ='b0;
             result = 0;
 			ready <= 1'b0;
 			valid =1'b1;
 			B = 2'b01;
-			done = 0;
+			
             tmp_ones_count = 0;
             state <= MULT;
         end
@@ -134,7 +146,8 @@ always @(posedge clk) begin
 			ready <= 0;
 			result =49'b0;
 			temp_result ={25'h0, A1};
-             for (integer i = 0; i < 24; i = i + 1) begin
+            for (integer i = 0; i < 24; i = i + 1)
+			begin
 			if(i!=1)begin
 			      temp_result= temp_result<<1;
 				  end
@@ -164,7 +177,7 @@ always @(posedge clk) begin
 		done = 1'b1;		
 		B = 2'b11;
         operation_count <= operation_count + 1;
-		state<=IDLE;
+		state<=0;
            
         end
     endcase

@@ -104,29 +104,6 @@ unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
 unsigned int readb = 0;
-/*
-do{
-    read = read_from_file(SYSFS_FILE_STATUS);
-    
-
-    readw = read_from_file(SYSFS_FILE_RES);
-    readl = read_from_file(SYSFS_FILE_ONES);
-    readb = read_from_file(SYSFS_FILE_STATUS);
-    
-    printf("Read status: %u\n", read);
-    printf("Read w: %u\n", readw);
-    printf("Read l: %u\n", readl);
-    printf("Read b: %u\n", readb);
-    }
-while (read != 3 && readw != 0 && readl != 0);
-
-
-  
-    readw = read_from_file(SYSFS_FILE_RES);
-    readl = read_from_file(SYSFS_FILE_ONES);
-    readb = read_from_file(SYSFS_FILE_STATUS);
-*/
-
 int k =0;
 int l=0;
  while (l==0) {
@@ -200,8 +177,8 @@ int test_module(){
  MyStruct values[500];
 
  for (int i = 0; i < 500; i++) {
-        values[i].a1 = random_in_range(0, 9); // 20 
-        values[i].a2 = random_in_range(0, 9); // 20 
+        values[i].a1 = random_in_range(0, 1048575); 
+        values[i].a2 = random_in_range(0, 1048575);  
         values[i].w = values[i].a1 * values[i].a2;
         values[i].num_ones = count_ones(values[i].w);}
 
@@ -210,13 +187,6 @@ int test_module(){
 
 
 int k=0;
-/*
-unsigned int readw = 0;
-for(int i=0; i<500; i++)
-{
-    readw = read_from_file(SYSFS_FILE_RES);
-    printf("%u", readw);
-}*/
 for(int i=0; i<50; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)

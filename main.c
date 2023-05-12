@@ -80,7 +80,7 @@ int write_to_file(char *filePath, unsigned int input){
     int n=write(fd_in, buffer, strlen(buffer));
     if(n!=strlen(buffer)){
         printf("Open %s - error number %d\n", filePath, errno);
-        fclose(fd_in);
+        close(fd_in);
         exit(3);
     }
 	close(fd_in);
@@ -126,7 +126,7 @@ while (read != 3 && readw != 0 && readl != 0);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
 */
-/*
+
 int k =0;
 int l=0;
  while (l==0) {
@@ -136,7 +136,7 @@ int l=0;
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
         unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
         unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
-       /*
+       
         printf("Read status: %u\n", read);
         printf("Read w: %u\n", readw);
         printf("Read l: %u\n", readl);
@@ -157,7 +157,7 @@ int l=0;
         readb = read_from_file(SYSFS_FILE_STATUS);
 
 
-*/
+
 
 struct multiplication_result result;
   result.w = readw;

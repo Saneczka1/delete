@@ -48,8 +48,7 @@ module gpioemu(n_reset,
     localparam IDLE = 0,
               MULT = 1,
               COUNT_ONES = 2,
-              DONE = 3,
-			  ZEROS = 4;
+              DONE = 3;
 
     always @(negedge n_reset)
 	begin
@@ -123,8 +122,6 @@ end
 always @(posedge clk) begin 
     case (state)
         IDLE: begin
-		if (A1 ==0 || A2 ==0) 
-		 state <= ZEROS;
             result = 0;
 			ready <= 1'b0;
 			valid =1'b1;
@@ -171,16 +168,6 @@ always @(posedge clk) begin
 		state<=IDLE;
            
         end
-		
-		ZEROS: begin
-		done = 1'b1;		
-		B = 2'b11;
-        operation_count <= operation_count + 1;
-		B =32'b0;
-		L =24'b0;
-		state<=IDLE;
-           
-        end
     endcase
 end
 
@@ -189,4 +176,3 @@ assign gpio_in_s_insp = gpio_in_s;
 assign sdata_out = sdata_out_s;
 //assign gpio_out =gpio_out_s;
 endmodule
-//for commit

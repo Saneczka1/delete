@@ -56,21 +56,19 @@ exit(1);
 }
 int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
-      //  buffer[n]='\0';
+     //   buffer[n]='\0';
         
         close(file);
+         exit(4);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
         close(file);
-        exit(3);
+        exit(5);
     }
 }
 
-
-
-
-
+/*
 int write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];
 	FILE *file=fopen(filePath, "w");
@@ -83,23 +81,28 @@ int write_to_file(char *filePath, unsigned int input){
 	fclose(file);
 	return 0;
 }
-/*
+*/
 
-void write_to_file(char *filePath, unsigned int input){
+
+int write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];
 	int fd_in=open(filePath, O_RDWR); 
 	if(fd_in < 0){  
 		 printf("Open %s - error number %d\n", filePath, errno);
 		 exit(2);
 	}
+
 	snprintf(buffer, MAX_BUFFER, "%x", input);
+    write(fd_in, buffer, strlen(buffer));
 	int n=write(fd_in, buffer, strlen(buffer));
+
     if(n!=strlen(buffer)){
         printf("Open %s - error number %d\n", filePath, errno);
         close(fd_in);
         exit(3);
     }
 	close(fd_in);
+    return 0;
 }
 
 /*operacja mnożenia -  to wczytywanie danych od użytkownika
@@ -122,16 +125,18 @@ unsigned int readb = 0;
 /*
 do{
     read = read_from_file(SYSFS_FILE_STATUS);
-    
-
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
+    unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
+    unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
     
-    printf("Read status: %u\n", read);
-    printf("Read w: %u\n", readw);
-    printf("Read l: %u\n", readl);
-    printf("Read b: %u\n", readb);
+   printf("Read status: %u\n", read);
+        printf("Read w: %u\n", readw);
+        printf("Read l: %u\n", readl);
+        printf("Read b: %u\n", readb);
+        printf("Read a1: %u\n", reada1);
+        printf("Read a2: %u\n", reada2);
     }
 while (read != 3 && readw != 0 && readl != 0);
 
@@ -139,8 +144,9 @@ while (read != 3 && readw != 0 && readl != 0);
   
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
-    readb = read_from_file(SYSFS_FILE_STATUS);
-*/
+    readb = read_from_file(SYSFS_FILE_STATUS);*/
+
+
 int k =0;
 int l=0;
  while (l==0) {
@@ -150,13 +156,13 @@ int l=0;
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
         unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
         unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
-       /*
+       
         printf("Read status: %u\n", read);
         printf("Read w: %u\n", readw);
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);
         printf("Read a1: %u\n", reada1);
-        printf("Read a2: %u\n", read);*/
+        printf("Read a2: %u\n", read);
         if (read == 3 && readw != 0 ){
         l++;
         }
@@ -171,14 +177,10 @@ int l=0;
         readb = read_from_file(SYSFS_FILE_STATUS);
 
 
-
-
 struct multiplication_result result;
   result.w = readw;
   result.l = readl;
   result.b = readb;
-
-
 return result;
 }
 
@@ -201,36 +203,23 @@ int count_ones(unsigned int n) {
 }
 
 int test_module(){
-
     typedef struct {
     unsigned int a1;
     unsigned int a2;
     unsigned int w;
-    unsigned int num_ones;
-} MyStruct;
-
+    unsigned int num_ones;} MyStruct;
 
 
  MyStruct values[500];
-
  for (int i = 0; i < 500; i++) {
         values[i].a1 = random_in_range(0, 9); // 20 
         values[i].a2 = random_in_range(0, 9); // 20 
         values[i].w = values[i].a1 * values[i].a2;
-        values[i].num_ones = count_ones(values[i].w);}
-
-
-
+        values[i].num_ones = count_ones(values[i].w);
+    }
 
 
 int k=0;
-/*
-unsigned int readw = 0;
-for(int i=0; i<500; i++)
-{
-    readw = read_from_file(SYSFS_FILE_RES);
-    printf("%u", readw);
-}*/
 for(int i=0; i<50; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
@@ -240,6 +229,7 @@ k++;
 
 return k;
 }
+
 
 
 

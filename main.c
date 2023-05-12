@@ -58,11 +58,11 @@ int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
         buffer[n]='\0';
         
-        close(file);
+        fclose(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
-        close(file);
+        fclose(file);
         exit(3);
     }
 }
@@ -97,7 +97,7 @@ int write_to_file(char *filePath, unsigned int input){
     int n=write(fd_in, buffer, strlen(buffer));
     if(n!=strlen(buffer)){
         printf("Open %s - error number %d\n", filePath, errno);
-        close(fd_in);
+        fclose(fd_in);
         exit(3);
     }
 	close(fd_in);

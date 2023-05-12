@@ -85,7 +85,7 @@ int write_to_file(char *filePath, unsigned int input){
 }
 */
 
-void write_to_file(char *filePath, unsigned int input){
+int write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];
 	int fd_in=open(filePath, O_RDWR); 
 	if(fd_in < 0){  
@@ -100,6 +100,7 @@ void write_to_file(char *filePath, unsigned int input){
         exit(3);
     }
 	close(fd_in);
+    return 0;
 }
 
 /*operacja mnożenia -  to wczytywanie danych od użytkownika

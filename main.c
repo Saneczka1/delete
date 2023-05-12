@@ -132,7 +132,7 @@ unsigned int read = 0;
 unsigned int readw = 0;
 unsigned int readl = 0;
 unsigned int readb = 0;
-/*
+
 do{
     read = read_from_file(SYSFS_FILE_STATUS);
     
@@ -141,10 +141,12 @@ do{
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
     
-    printf("Read status: %u\n", read);
-    printf("Read w: %u\n", readw);
-    printf("Read l: %u\n", readl);
-    printf("Read b: %u\n", readb);
+   printf("Read status: %u\n", read);
+        printf("Read w: %u\n", readw);
+        printf("Read l: %u\n", readl);
+        printf("Read b: %u\n", readb);
+        printf("Read a1: %u\n", reada1);
+        printf("Read a2: %u\n", read);
     }
 while (read != 3 && readw != 0 && readl != 0);
 
@@ -153,7 +155,8 @@ while (read != 3 && readw != 0 && readl != 0);
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
-*/
+
+/*
 int k =0;
 int l=0;
  while (l==0) {
@@ -184,7 +187,7 @@ int l=0;
         readb = read_from_file(SYSFS_FILE_STATUS);
 
 
-
+*/
 
 struct multiplication_result result;
   result.w = readw;

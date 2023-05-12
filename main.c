@@ -44,7 +44,7 @@ printf(" OK\n");
 return 0;
 }
 
-
+/*
 
 unsigned int read_from_file(char *filePath){
 char buffer[MAX_BUFFER];
@@ -65,10 +65,21 @@ if(n>0){
         close(file);
         exit(3);
     }
+}*/
+
+
+unsigned int read_from_file(char *filePath){
+	char buffer[MAX_BUFFER];
+	int file=open(filePath, O_RDONLY);
+	if(file<0){
+		 printf("Open %s - error number %d\n", filePath, errno);
+		 exit(5);
+	}
+	int n=read(file, buffer, MAX_BUFFER);
+	close(file);
+	return strtoul(buffer, NULL, 16);
+	 
 }
-
-
-
 
 
 int write_to_file(char *filePath, unsigned int input){

@@ -15,6 +15,7 @@
 #define SYSFS_FILE_RES "/sys/kernel/sykt/rabw"
 #define SYSFS_FILE_STATUS "/sys/kernel/sykt/rabb"
 #define SYSFS_FILE_ONES "/sys/kernel/sykt/rabl"
+#define SYSFS_FILE_STATE "/sys/kernel/sykt/rabst"
 
 
 // oby nie było błędów z kompilacją i z kolejnoscią, definiuje metody na początku
@@ -100,13 +101,11 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
-unsigned int read = 0;
-unsigned int readw = 0;
-unsigned int readl = 0;
-unsigned int readb = 0;
+
 int k =0;
 int l=0;
  while (l==0) {
+        unsigned int reads = read_from_file(SYSFS_FILE_STATE);
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
@@ -114,7 +113,7 @@ int l=0;
         unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
         unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
        
-        if (read == 3 && readw != 0 ){
+        if (read == 3 && readw != 0 && reads ==4 ){
         l++;
         }
         if (k == 10 )

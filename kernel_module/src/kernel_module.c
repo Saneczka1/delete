@@ -23,7 +23,7 @@ MODULE_VERSION("0.01");
 
 #define SYKT_GPIO_ADDR_SPACE (baseptr) 
 #define SYKT_GPIO_ARG2_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000388)
-//#define SYKT_GPIO_CTRL_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A1)
+#define SYKT_GPIO_STATE_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A4)
 #define SYKT_GPIO_ARG1_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000380)
 #define SYKT_GPIO_RESULT_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000390)
 #define SYKT_GPIO_ONES_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000398)
@@ -79,12 +79,38 @@ return count;
 }
 
 
+
+
+
+static ssize_t rabst_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+{
+raba1 = readl(SYKT_GPIO_STATE_ADDR);
+return sprintf(buf, "%x", rabst);
+}
+
+
+static ssize_t rabst_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
+{
+    sscanf(buf,"%x",&rabst);
+    if (!is_hex(buf, count)) {
+        printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
+        return -EINVAL;
+    }
+
+writel(raba2, SYKT_GPIO_STATE_ADDR);
+return count;
+}
+
+
+
+
+
+
 static ssize_t raba1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 {
 raba1 = readl(SYKT_GPIO_ARG1_ADDR);
 return sprintf(buf, "%x", raba1);
 }
-
 
 static ssize_t raba2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 {
@@ -162,6 +188,7 @@ static struct kobj_attribute raba2_attr = __ATTR(raba2, 0660, raba2_show, raba2_
 static struct kobj_attribute rabw_attr = __ATTR(rabw, 0660, rabw_show, rabw_store);
 static struct kobj_attribute rabl_attr = __ATTR(rabl, 0660, rabl_show, rabl_store);
 static struct kobj_attribute rabb_attr = __ATTR(rabb, 0660, rabb_show, rabb_store);
+static struct kobj_attribute rabb_attr = __ATTR(rabst, 0660, rabst_show, rabst_store);
 
 //makra
 
@@ -221,6 +248,7 @@ sysfs_remove_file(kernel_kobj, &raba2_attr.attr);
 sysfs_remove_file(kernel_kobj, &rabw_attr.attr);
 sysfs_remove_file(kernel_kobj, &rabl_attr.attr);
 sysfs_remove_file(kernel_kobj, &rabb_attr.attr);
+sysfs_remove_file(kernel_kobj, &rabst_attr.attr);
 iounmap(baseptr);
 }
 

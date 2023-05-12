@@ -57,7 +57,7 @@ module gpioemu(n_reset,
         sdata_out_s <= 0;
 		
 		valid =1;
-        state <= 0;
+        state <= 4;
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
@@ -111,6 +111,9 @@ begin
 		
 			sdata_out_s <= {8'h0, L};
 		
+		else if (saddress == 16'h03A4) 
+		
+			sdata_out_s <= state;
 		else 
 		
 			sdata_out_s <= 'h0;
@@ -122,23 +125,11 @@ end
 always @(posedge clk) begin 
     case (state)
         IDLE: begin
-		
-		
-        state <= 0;
-        result =49'b0;
-		W = 32'b0;
-        tmp_ones_count = 0;
-        operation_count <= 0;
-        A1 <= 0;
-        A2 <= 0;
-        L = 0;
-        
-		done ='b0;
             result = 0;
 			ready <= 1'b0;
 			valid =1'b1;
 			B = 2'b01;
-			
+			done = 0;
             tmp_ones_count = 0;
             state <= MULT;
         end
@@ -177,7 +168,7 @@ always @(posedge clk) begin
 		done = 1'b1;		
 		B = 2'b11;
         operation_count <= operation_count + 1;
-		state<=0;
+		state<=4;
            
         end
     endcase

@@ -112,8 +112,17 @@ int l=0;
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
         unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
         unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
+
+
+         printf("Read status: %u\n", read);
+        printf("Read w: %u\n", readw);
+        printf("Read l: %u\n", readl);
+        printf("Read b: %u\n", readb);
+        printf("Read a1: %u\n", reada1);
+        printf("Read a2: %u\n", reada2);
+        printf("Read state: %u\n", reads);
        
-        if (read == 3 && readw != 0 && reads ==4 ){
+        if (read == 3 && readw != 0 && reads == 4 ){
         l++;
         }
         if (k == 10 )

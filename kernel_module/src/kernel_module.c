@@ -85,7 +85,7 @@ return count;
 
 static ssize_t rabst_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
 {
-raba1 = readl(SYKT_GPIO_STATE_ADDR);
+rabst = readl(SYKT_GPIO_STATE_ADDR);
 return sprintf(buf, "%x", rabst);
 }
 

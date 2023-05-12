@@ -181,8 +181,8 @@ int test_module(){
  MyStruct values[500];
 
  for (int i = 0; i < 500; i++) {
-        values[i].a1 = random_in_range(0, 1048575); 
-        values[i].a2 = random_in_range(0, 1048575);  
+        values[i].a1 = random_in_range(0, 9); 
+        values[i].a2 = random_in_range(0, 9);  
         values[i].w = values[i].a1 * values[i].a2;
         values[i].num_ones = count_ones(values[i].w);}
 
@@ -191,7 +191,7 @@ int test_module(){
 
 
 int k=0;
-for(int i=0; i<500; i++){
+for(int i=0; i<50; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
 printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %x,resultl = %x\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);

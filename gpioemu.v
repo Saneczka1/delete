@@ -57,7 +57,7 @@ module gpioemu(n_reset,
         sdata_out_s <= 0;
 		
 		valid =1;
-        state <= 4;
+        state <= IDLE;
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
@@ -165,7 +165,7 @@ always @(posedge clk) begin
 		done = 1'b1;		
 		B = 2'b11;
         operation_count <= operation_count + 1;
-		state<=4;
+		state<=IDLE;
            
         end
     endcase

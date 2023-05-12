@@ -124,7 +124,7 @@ int l=0;
         printf("Read a2: %u\n", reada2);
         printf("Read state: %u\n", readst);
        
-        if (read == 3 && readw != 0 && readst == 4){
+        if (read == 3 && readw != 0 && readst == 3){
         l++;
         }
         if (k == 10 )

@@ -114,12 +114,6 @@ int l=0;
         unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
         unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
        
-        printf("Read status: %u\n", read);
-        printf("Read w: %u\n", readw);
-        printf("Read l: %u\n", readl);
-        printf("Read b: %u\n", readb);
-        printf("Read a1: %u\n", reada1);
-        printf("Read a2: %u\n", read);
         if (read == 3 && readw != 0 ){
         l++;
         }
@@ -187,7 +181,7 @@ int test_module(){
 
 
 int k=0;
-for(int i=0; i<50; i++){
+for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
 printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %u,resultl = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);

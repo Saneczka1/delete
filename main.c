@@ -59,6 +59,7 @@ if(n>0){
         buffer[n]='\0';
         
         close(file);
+         exit(2);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
         printf("Open %s - error %d\n", filePath, errno); 

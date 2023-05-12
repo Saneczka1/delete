@@ -68,7 +68,7 @@ if(n>0){
 }
 
 
-
+/*
 
 
 int write_to_file(char *filePath, unsigned int input){
@@ -83,7 +83,7 @@ int write_to_file(char *filePath, unsigned int input){
 	fclose(file);
 	return 0;
 }
-/*
+*/
 
 void write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];

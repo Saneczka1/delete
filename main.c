@@ -44,7 +44,7 @@ printf(" OK\n");
 return 0;
 }
 
-/*
+
 
 unsigned int read_from_file(char *filePath){
 char buffer[MAX_BUFFER];
@@ -65,9 +65,9 @@ if(n>0){
         close(file);
         exit(3);
     }
-}*/
+}
 
-
+/*
 unsigned int read_from_file(char *filePath){
 	char buffer[MAX_BUFFER];
 	int file=open(filePath, O_RDONLY);
@@ -94,7 +94,8 @@ int write_to_file(char *filePath, unsigned int input){
 	fclose(file);
 	return 0;
 }
-/*
+*/
+
 
 void write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];

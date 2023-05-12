@@ -122,9 +122,9 @@ int l=0;
         }
         k++;
     }
-     readw = read_from_file(SYSFS_FILE_RES);
-        readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);
+     unsigned int   readw = read_from_file(SYSFS_FILE_RES);
+     unsigned int   readl = read_from_file(SYSFS_FILE_ONES);
+     unsigned int   readb = read_from_file(SYSFS_FILE_STATUS);
 
 
 

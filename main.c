@@ -168,7 +168,7 @@ int random_in_range(int min, int max) {
 int count_ones(unsigned int num) {
     int count = 0;
 
-    for(i=0;n>0;i++){    
+    for( int i=0;n>0;i++){    
     a[i]=n%2;    
     if(a[i] == 1){
         count++;

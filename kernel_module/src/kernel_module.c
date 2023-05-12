@@ -38,6 +38,7 @@ static int raba2;
 static int rabw;
 static int rabl;
 static int rabb;
+static int rabst;
 
 // odczyt argumentu arg1 
 //store odczyt i zapis
@@ -97,7 +98,7 @@ static ssize_t rabst_store(struct kobject *kobj,struct kobj_attribute *attr,cons
         return -EINVAL;
     }
 
-writel(raba2, SYKT_GPIO_STATE_ADDR);
+writel(rabst, SYKT_GPIO_STATE_ADDR);
 return count;
 }
 

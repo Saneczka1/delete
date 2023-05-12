@@ -147,7 +147,7 @@ do{
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);
         printf("Read a1: %u\n", reada1);
-        printf("Read a2: %u\n", read);
+        printf("Read a2: %u\n", reada2);
     }
 while (read != 3 && readw != 0 && readl != 0);
 

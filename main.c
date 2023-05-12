@@ -167,6 +167,7 @@ int random_in_range(int min, int max) {
 
 int count_ones(unsigned int n) {
     int count = 0;
+    int a[32];
 
     for( int i=0;n>0;i++){    
     a[i]=n%2;    
@@ -174,12 +175,7 @@ int count_ones(unsigned int n) {
         count++;
     }
     n=n/2;    
-    }   
-
-    char binary[33]; 
-    sprintf(binary, "%032lX", num);
-   
-    
+    }       
     return count;
 }
 

@@ -44,7 +44,7 @@ printf(" OK\n");
 return 0;
 }
 
-/*
+
 
 unsigned int read_from_file(char *filePath){
 char buffer[MAX_BUFFER];
@@ -56,7 +56,7 @@ exit(1);
 }
 int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
-        buffer[n]='\0';
+      //  buffer[n]='\0';
         
         close(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
@@ -65,21 +65,10 @@ if(n>0){
         close(file);
         exit(3);
     }
-}*/
-
-
-unsigned int read_from_file(char *filePath){
-	char buffer[MAX_BUFFER];
-	int file=open(filePath, O_RDONLY);
-	if(file<0){
-		 printf("Open %s - error number %d\n", filePath, errno);
-		 exit(5);
-	}
-	int n=read(file, buffer, MAX_BUFFER);
-	close(file);
-	return strtoul(buffer, NULL, 16);
-	 
 }
+
+
+
 
 
 int write_to_file(char *filePath, unsigned int input){
@@ -161,13 +150,13 @@ int l=0;
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
         unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
         unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
-       
+       /*
         printf("Read status: %u\n", read);
         printf("Read w: %u\n", readw);
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);
         printf("Read a1: %u\n", reada1);
-        printf("Read a2: %u\n", read);
+        printf("Read a2: %u\n", read);*/
         if (read == 3 && readw != 0 ){
         l++;
         }

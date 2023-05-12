@@ -136,11 +136,11 @@ unsigned int readb = 0;
 
 do{
     read = read_from_file(SYSFS_FILE_STATUS);
-    
-
     readw = read_from_file(SYSFS_FILE_RES);
     readl = read_from_file(SYSFS_FILE_ONES);
     readb = read_from_file(SYSFS_FILE_STATUS);
+    unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
+    unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
     
    printf("Read status: %u\n", read);
         printf("Read w: %u\n", readw);

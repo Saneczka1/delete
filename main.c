@@ -93,7 +93,8 @@ int write_to_file(char *filePath, unsigned int input){
 		 exit(2);
 	}
 	snprintf(buffer, MAX_BUFFER, "%x", input);
-	int n=write(fd_in, buffer, strlen(buffer));
+    write(fd_in, buffer, strlen(buffer));
+    int n=write(fd_in, buffer, strlen(buffer));
     if(n!=strlen(buffer)){
         printf("Open %s - error number %d\n", filePath, errno);
         close(fd_in);

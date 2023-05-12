@@ -165,7 +165,7 @@ int random_in_range(int min, int max) {
     return min + rand() % (max - min + 1);
 }
 
-int count_ones(unsigned int num) {
+int count_ones(unsigned int n) {
     int count = 0;
 
     for( int i=0;n>0;i++){    

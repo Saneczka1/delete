@@ -46,8 +46,6 @@ return 0;
 
 
 
-
-
 unsigned int read_from_file(char *filePath){
 char buffer[MAX_BUFFER];
 
@@ -59,13 +57,13 @@ exit(1);
 int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
         buffer[n]='\0';
-        //printf("%s", buffer); 
+        
         close(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
         close(file);
-        return -404;
+        exit(3);
     }
 }
 
@@ -135,16 +133,22 @@ int l=0;
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
-       /*
+        unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
+        unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
+       
         printf("Read status: %u\n", read);
         printf("Read w: %u\n", readw);
         printf("Read l: %u\n", readl);
-        printf("Read b: %u\n", readb);*/
+        printf("Read b: %u\n", readb);
+        printf("Read a1: %u\n", reada1);
+        printf("Read a2: %u\n", reada2);
         if (read == 3 && readw != 0 ){
-      //  if (read != 0 ){
-        l++;}
-         if (k == 10 ){
-        break;}
+        l++;
+        }
+        if (k == 10 )
+        {
+        break;
+        }
         k++;
     }
      readw = read_from_file(SYSFS_FILE_RES);
@@ -159,8 +163,7 @@ struct multiplication_result result;
   result.l = readl;
   result.b = readb;
 
-//printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
-//printf("A1=0x%x, A2=0x%x", arg1, arg2);
+
 return result;
 }
 
@@ -222,7 +225,7 @@ k++;
 
 return k;
 }
-//for commit
+
 
 
 

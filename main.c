@@ -45,36 +45,40 @@ return 0;
 }
 
 
-string decToHex(int n)
-{
-    
-    string ans = "";
-    
+void swap(char *a, char *b) {
+    char temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+char* decToHex(int n) {
+    char ans[100];
+    int i = 0;
+
     while (n != 0) {
-        int rem = 0;
-        char ch;
-        rem = n % 16;
-       
+        int rem = n % 16;
+
         if (rem < 10) {
-            ch = rem + 48;
+            ans[i++] = 48 + rem;
         }
         else {
-            ch = rem + 55;
+            ans[i++] = 55 + rem;
         }
-        
-        ans += ch;
+
         n = n / 16;
     }
-      
-   
-    int i = 0, j = ans.size() - 1;
-    while(i <= j)
-    {
-      swap(ans[i], ans[j]);
-      i++;
-      j--;
+
+    ans[i] = '\0';
+
+    int start = 0;
+    int end = i - 1;
+    while (start < end) {
+        swap(&ans[start], &ans[end]);
+        start++;
+        end--;
     }
-    return ans;
+
+    return strdup(ans);
 }
 
 
@@ -229,8 +233,8 @@ int test_module(){
  for (int i = 0; i < 500; i++) {
         values[i].a1 = random_in_range(0, 9); // 20 
         values[i].a2 = random_in_range(0, 9); // 20 
-        values[i].w = decToHex(values[i].a1 * values[i].a2);
-        values[i].num_ones = decToHex(count_ones(values[i].w));}
+        values[i].w = values[i].a1 * values[i].a2;
+        values[i].num_ones = count_ones(values[i].w);}
 
 
 
@@ -247,7 +251,7 @@ for(int i=0; i<500; i++)
 for(int i=0; i<50; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
-printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, resultw = %u,resultl = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
+printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %u,resultl = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 k++;
 }
 

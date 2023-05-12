@@ -218,8 +218,8 @@ int test_module(){
     typedef struct {
     unsigned int a1;
     unsigned int a2;
-    unsigned int w;
-    int num_ones;
+    string w;
+    string num_ones;
 } MyStruct;
 
 

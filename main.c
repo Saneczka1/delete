@@ -45,41 +45,6 @@ return 0;
 }
 
 
-void swap(char *a, char *b) {
-    char temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-char* decToHex(int n) {
-    char ans[100];
-    int i = 0;
-
-    while (n != 0) {
-        int rem = n % 16;
-
-        if (rem < 10) {
-            ans[i++] = 48 + rem;
-        }
-        else {
-            ans[i++] = 55 + rem;
-        }
-
-        n = n / 16;
-    }
-
-    ans[i] = '\0';
-
-    int start = 0;
-    int end = i - 1;
-    while (start < end) {
-        swap(&ans[start], &ans[end]);
-        start++;
-        end--;
-    }
-
-    return strdup(ans);
-}
 
 
 

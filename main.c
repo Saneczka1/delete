@@ -19,7 +19,7 @@
 
 // oby nie było błędów z kompilacją i z kolejnoscią, definiuje metody na początku
 unsigned int read_from_file(char *);  
-void write_to_file(char *, unsigned int);
+int write_to_file(char *, unsigned int);
 struct multiplication_result multiply(unsigned int, unsigned int);
 int test_module();
 

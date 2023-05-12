@@ -188,7 +188,7 @@ static struct kobj_attribute raba2_attr = __ATTR(raba2, 0660, raba2_show, raba2_
 static struct kobj_attribute rabw_attr = __ATTR(rabw, 0660, rabw_show, rabw_store);
 static struct kobj_attribute rabl_attr = __ATTR(rabl, 0660, rabl_show, rabl_store);
 static struct kobj_attribute rabb_attr = __ATTR(rabb, 0660, rabb_show, rabb_store);
-static struct kobj_attribute rabb_attr = __ATTR(rabst, 0660, rabst_show, rabst_store);
+static struct kobj_attribute rabst_attr = __ATTR(rabst, 0660, rabst_show, rabst_store);
 
 //makra
 

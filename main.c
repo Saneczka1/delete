@@ -101,28 +101,30 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
 write_to_file(SYSFS_FILE_WE1,arg1);
 write_to_file(SYSFS_FILE_WE2,arg2);
-
+unsigned int read = 0;
+unsigned int readw = 0;
+unsigned int readl = 0;
+unsigned int readb = 0;
 int k =0;
 int l=0;
  while (l==0) {
-        unsigned int reads = read_from_file(SYSFS_FILE_STATE);
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
         unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
         unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
+        unsigned int  readst = read_from_file( SYSFS_FILE_STATE);
 
-
-         printf("Read status: %u\n", read);
+        printf("Read status: %u\n", read);
         printf("Read w: %u\n", readw);
         printf("Read l: %u\n", readl);
         printf("Read b: %u\n", readb);
         printf("Read a1: %u\n", reada1);
         printf("Read a2: %u\n", reada2);
-        printf("Read state: %u\n", reads);
+        printf("Read state: %u\n", readst);
        
-        if (read == 3 && readw != 0 && reads == 4 ){
+        if (read == 3 && readw != 0 && readst == 4){
         l++;
         }
         if (k == 10 )
@@ -131,9 +133,9 @@ int l=0;
         }
         k++;
     }
-     unsigned int   readw = read_from_file(SYSFS_FILE_RES);
-     unsigned int   readl = read_from_file(SYSFS_FILE_ONES);
-     unsigned int   readb = read_from_file(SYSFS_FILE_STATUS);
+     readw = read_from_file(SYSFS_FILE_RES);
+        readl = read_from_file(SYSFS_FILE_ONES);
+        readb = read_from_file(SYSFS_FILE_STATUS);
 
 
 
@@ -179,8 +181,8 @@ int test_module(){
  MyStruct values[500];
 
  for (int i = 0; i < 500; i++) {
-        values[i].a1 = random_in_range(0, 9); 
-        values[i].a2 = random_in_range(0, 9);  
+        values[i].a1 = random_in_range(0, 1048575); 
+        values[i].a2 = random_in_range(0, 1048575);  
         values[i].w = values[i].a1 * values[i].a2;
         values[i].num_ones = count_ones(values[i].w);}
 
@@ -189,7 +191,7 @@ int test_module(){
 
 
 int k=0;
-for(int i=0; i<50; i++){
+for(int i=0; i<500; i++){
 struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 if( result.w != values[i].w && result.l != values[i].num_ones)
 printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %x,resultl = %x\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);

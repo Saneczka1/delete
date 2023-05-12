@@ -56,7 +56,7 @@ exit(1);
 }
 int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
-      //  buffer[n]='\0';
+        buffer[n]='\0';
         
         close(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX

@@ -208,17 +208,24 @@ if (sysfs_create_file(kobj_ref, &raba1_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
 }
+if (sysfs_create_file(kobj_ref, &rabst_attr.attr))
+{
+    printk(KERN_INFO "Cannot create sysfs file......\n");
+}
+
 if (sysfs_create_file(kobj_ref, &raba2_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
     sysfs_remove_file(kernel_kobj, &raba1_attr.attr);
 }
+
 if (sysfs_create_file(kobj_ref, &rabw_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
     sysfs_remove_file(kernel_kobj, &raba1_attr.attr);
     sysfs_remove_file(kernel_kobj, &raba2_attr.attr);
 }
+
 if (sysfs_create_file(kobj_ref, &rabl_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
@@ -226,6 +233,7 @@ if (sysfs_create_file(kobj_ref, &rabl_attr.attr))
     sysfs_remove_file(kernel_kobj, &raba2_attr.attr);
     sysfs_remove_file(kernel_kobj, &rabw_attr.attr);
 }
+
 if (sysfs_create_file(kobj_ref, &rabb_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");

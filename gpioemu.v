@@ -113,7 +113,7 @@ begin
 		
 		else if (saddress == 16'h03A4) 
 		
-			sdata_out_s <= state;
+			sdata_out_s <= {28'b0, state};
 		else 
 		
 			sdata_out_s <= 'h0;

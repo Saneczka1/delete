@@ -57,12 +57,10 @@ module gpioemu(n_reset,
         sdata_out_s <= 0;
 		
 		valid =1;
-        state <= 4;
-		temp_result = 0;
+        state <= IDLE;
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
-		temp_result =0;
         operation_count <= 0;
         ready <= 1'b1;
         A1 <= 0;
@@ -76,7 +74,7 @@ module gpioemu(n_reset,
 	
 
     always @(posedge swr) 
-	begin   // może być błąd
+	begin   
 			if (saddress == 16'h03A0 ) 
 		begin
 			ready <= 1'b0;
@@ -101,7 +99,7 @@ always @(posedge srd)
 begin
     if (saddress == 16'h0390) 
 	
-     //  if (done) begin
+     //  if (done) begin  //jeszcze sprawdzić to
 	    sdata_out_s <= W[31:0];
       //  end
     
@@ -113,9 +111,6 @@ begin
 		
 			sdata_out_s <= {8'h0, L};
 		
-		else if (saddress == 16'h03A4) 
-		
-			sdata_out_s <= {28'b0, state};
 		else 
 		
 			sdata_out_s <= 'h0;
@@ -132,9 +127,7 @@ always @(posedge clk) begin
 			valid =1'b1;
 			B = 2'b01;
 			done = 0;
-			temp_result = 0;
             tmp_ones_count = 0;
-			temp_result =0;
             state <= MULT;
         end
         MULT: begin
@@ -143,12 +136,12 @@ always @(posedge clk) begin
 			temp_result ={25'h0, A1};
             for (integer i = 0; i < 24; i = i + 1)
 			begin
-			if(i!=1)begin
+			if(i!=1) begin
 			      temp_result= temp_result<<1;
-				end
-            if (A2[i]) begin
-               result = result + temp_result;
-            end
+				  end
+                if (A2[i]) begin
+                    result = result + temp_result;
+                end
             end
 			valid = (result[48:32] == 0);
 			B ={ready,valid};
@@ -172,7 +165,7 @@ always @(posedge clk) begin
 		done = 1'b1;		
 		B = 2'b11;
         operation_count <= operation_count + 1;
-		state<=4;
+		state<=IDLE;
            
         end
     endcase

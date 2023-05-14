@@ -119,7 +119,7 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
         if (readw ==0 )
             {
-            printf("the result cannot be represented in 32 bits");    
+            printf("result cannot be represented in 32 bits");    
             break;
         }
 

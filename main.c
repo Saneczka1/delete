@@ -129,7 +129,7 @@ int l=0;
         }
         if (k == 10 )
             {
-            printf("the result cannot be represented in 32 bits")    
+            printf("the result cannot be represented in 32 bits");    
             break;
             }
 

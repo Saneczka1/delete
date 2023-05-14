@@ -14,16 +14,12 @@ MODULE_VERSION("0.01");
 #define SYKT_MEM_SIZE (0x8000)
 #define SYKT_EXIT (0x3333)
 #define SYKT_EXIT_CODE (0x7F)
-
-
-//#define SYKT_QEMU_CTRL_ADDR (0x00100000)
 #define SYKT_QEMU_EXIT_VAL (0x00007777)
  
 
 
 #define SYKT_GPIO_ADDR_SPACE (baseptr) 
 #define SYKT_GPIO_ARG2_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000388)
-#define SYKT_GPIO_STATE_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003B4)
 #define SYKT_GPIO_ARG1_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000380)
 #define SYKT_GPIO_RESULT_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000390)
 #define SYKT_GPIO_ONES_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000398)
@@ -38,7 +34,6 @@ static int raba2;
 static int rabw;
 static int rabl;
 static int rabb;
-static int rabst;
 
 // odczyt argumentu arg1 
 //store odczyt i zapis
@@ -46,7 +41,7 @@ static int rabst;
 static bool is_hex(const char *buf, size_t count) {
     for (size_t i = 0; i < count; ++i) {
         char c = buf[i];
-        if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
+            if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
             return false;
         }
     }
@@ -56,131 +51,100 @@ static bool is_hex(const char *buf, size_t count) {
 static ssize_t raba1_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
 {
     sscanf(buf,"%x",&raba1);
-if (!is_hex(buf, count)) {
+    
+    if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
 
 
-writel(raba1, SYKT_GPIO_ARG1_ADDR);
-return count;
+    writel(raba1, SYKT_GPIO_ARG1_ADDR);
+    return count;
 }
 
 
 static ssize_t raba2_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
 {
     sscanf(buf,"%x",&raba2);
+    
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
 
-writel(raba2, SYKT_GPIO_ARG2_ADDR);
-return count;
+    writel(raba2, SYKT_GPIO_ARG2_ADDR);
+    return count;
 }
 
 
-
-
-
-static ssize_t rabst_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
-{
-rabst = readl(SYKT_GPIO_STATE_ADDR);
-return sprintf(buf, "%x", rabst);
+static ssize_t raba1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
+    raba1 = readl(SYKT_GPIO_ARG1_ADDR);
+    return sprintf(buf, "%x", raba1);
 }
 
 
-static ssize_t rabst_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
-{
-    sscanf(buf,"%x",&rabst);
-    if (!is_hex(buf, count)) {
-        printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
-        return -EINVAL;
-    }
-
-writel(rabst, SYKT_GPIO_STATE_ADDR);
-return count;
+static ssize_t raba2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
+    raba2 = readl(SYKT_GPIO_ARG2_ADDR);
+    return sprintf(buf, "%x", raba2);
 }
 
 
-
-
-
-
-static ssize_t raba1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
-{
-raba1 = readl(SYKT_GPIO_ARG1_ADDR);
-return sprintf(buf, "%x", raba1);
-}
-
-static ssize_t raba2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
-{
-raba2 = readl(SYKT_GPIO_ARG2_ADDR);
-return sprintf(buf, "%x", raba2);
-}
-
-
-static ssize_t rabw_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
-{
+static ssize_t rabw_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count){
     sscanf(buf,"%x",&rabw);
+    
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
 
-writel(rabw, SYKT_GPIO_RESULT_ADDR);
-return count;
+    writel(rabw, SYKT_GPIO_RESULT_ADDR);
+    return count;
 }
 
 
-static ssize_t rabl_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
-{
+static ssize_t rabl_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count){
     sscanf(buf,"%x",&rabl);
+    
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
 
-writel(rabl, SYKT_GPIO_ONES_ADDR);
-return count;
+    writel(rabl, SYKT_GPIO_ONES_ADDR);
+    return count;
 }
 
 
 
-static ssize_t rabw_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
-{
-
-rabw = readl(SYKT_GPIO_RESULT_ADDR);
-return sprintf(buf, "%x", rabw);
+static ssize_t rabw_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
+    rabw = readl(SYKT_GPIO_RESULT_ADDR);
+    return sprintf(buf, "%x", rabw);
 }
 
 
 
 
-static ssize_t rabl_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
-{
+static ssize_t rabl_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
     rabl = readl(SYKT_GPIO_ONES_ADDR);
     return sprintf(buf, "%x", rabl);
 }
 
 
-static ssize_t rabb_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
-
-{
-rabb = readl(SYKT_GPIO_STATUS_ADDR);
-return sprintf(buf, "%x", rabb);
+static ssize_t rabb_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
+    rabb = readl(SYKT_GPIO_STATUS_ADDR);
+    return sprintf(buf, "%x", rabb);
 }
 
-static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count)
-{
+static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count){
     sscanf(buf,"%x",&rabb);
+    
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
        
-		writel(rabb, SYKT_GPIO_STATUS_ADDR);
-        return count;
+	writel(rabb, SYKT_GPIO_STATUS_ADDR);
+    return count;
 }
 
 
@@ -189,7 +153,6 @@ static struct kobj_attribute raba2_attr = __ATTR(raba2, 0660, raba2_show, raba2_
 static struct kobj_attribute rabw_attr = __ATTR(rabw, 0660, rabw_show, rabw_store);
 static struct kobj_attribute rabl_attr = __ATTR(rabl, 0660, rabl_show, rabl_store);
 static struct kobj_attribute rabb_attr = __ATTR(rabb, 0660, rabb_show, rabb_store);
-static struct kobj_attribute rabst_attr = __ATTR(rabst, 0660, rabst_show, rabst_store);
 
 //makra
 
@@ -208,24 +171,17 @@ if (sysfs_create_file(kobj_ref, &raba1_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
 }
-if (sysfs_create_file(kobj_ref, &rabst_attr.attr))
-{
-    printk(KERN_INFO "Cannot create sysfs file......\n");
-}
-
 if (sysfs_create_file(kobj_ref, &raba2_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
     sysfs_remove_file(kernel_kobj, &raba1_attr.attr);
 }
-
 if (sysfs_create_file(kobj_ref, &rabw_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
     sysfs_remove_file(kernel_kobj, &raba1_attr.attr);
     sysfs_remove_file(kernel_kobj, &raba2_attr.attr);
 }
-
 if (sysfs_create_file(kobj_ref, &rabl_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
@@ -233,7 +189,6 @@ if (sysfs_create_file(kobj_ref, &rabl_attr.attr))
     sysfs_remove_file(kernel_kobj, &raba2_attr.attr);
     sysfs_remove_file(kernel_kobj, &rabw_attr.attr);
 }
-
 if (sysfs_create_file(kobj_ref, &rabb_attr.attr))
 {
     printk(KERN_INFO "Cannot create sysfs file......\n");
@@ -257,7 +212,6 @@ sysfs_remove_file(kernel_kobj, &raba2_attr.attr);
 sysfs_remove_file(kernel_kobj, &rabw_attr.attr);
 sysfs_remove_file(kernel_kobj, &rabl_attr.attr);
 sysfs_remove_file(kernel_kobj, &rabb_attr.attr);
-sysfs_remove_file(kernel_kobj, &rabst_attr.attr);
 iounmap(baseptr);
 }
 

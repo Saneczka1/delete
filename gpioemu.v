@@ -61,6 +61,7 @@ module gpioemu(n_reset,
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
+		temp_result =0;
         operation_count <= 0;
         ready <= 1'b1;
         A1 <= 0;
@@ -131,6 +132,7 @@ always @(posedge clk) begin
 			B = 2'b01;
 			done = 0;
             tmp_ones_count = 0;
+			temp_result =0;
             state <= MULT;
         end
         MULT: begin
@@ -141,10 +143,10 @@ always @(posedge clk) begin
 			begin
 			if(i!=1)begin
 			      temp_result= temp_result<<1;
-				  end
-                if (A2[i]) begin
-                    result = result + temp_result;
-                end
+				end
+            if (A2[i]) begin
+               result = result + temp_result;
+            end
             end
 			valid = (result[48:32] == 0);
 			B ={ready,valid};

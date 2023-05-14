@@ -128,6 +128,12 @@ int l=0;
         l++;
         }
         if (k == 10 )
+            {
+            printf("the result cannot be represented in 32 bits")    
+            break;
+            }
+
+        if (k == 10 )
         {
         break;
         }

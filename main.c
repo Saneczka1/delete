@@ -6,7 +6,6 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-
 #define MAX_BUFFER 1024
 
 //definicja plików
@@ -19,7 +18,7 @@
 
 // oby nie było błędów z kompilacją i z kolejnoscią, definiuje metody na początku
 unsigned int read_from_file(char *);  
-int write_to_file(char *, unsigned int);
+void write_to_file(char *, unsigned int);
 struct multiplication_result multiply(unsigned int, unsigned int);
 int test_module();
 
@@ -45,11 +44,10 @@ return 0;
 }
 
 
-
 unsigned int read_from_file(char *filePath){
 char buffer[MAX_BUFFER];
 
-int file=open(filePath, O_RDONLY); 
+int file=open(filePath, O_RDONLY);
 if(file<0){
 printf("Open %s - error number %d\n", filePath, errno);
 exit(1);
@@ -57,34 +55,34 @@ exit(1);
 int n=read(file, buffer, MAX_BUFFER);
 if(n>0){   
         buffer[n]='\0';
-        
+        printf("%s", buffer); 
         close(file);
         return strtoul(buffer, NULL, 16);  // 16 znaczy HEX
     }else{
         printf("Open %s - error %d\n", filePath, errno); 
         close(file);
-        exit(3);
+        return 404;
     }
 }
 
-int write_to_file(char *filePath, unsigned int input){
+
+
+
+void write_to_file(char *filePath, unsigned int input){
 	char buffer[MAX_BUFFER];
-    FILE *file=fopen(filePath, "w");
 	int fd_in=open(filePath, O_RDWR); 
 	if(fd_in < 0){  
 		 printf("Open %s - error number %d\n", filePath, errno);
 		 exit(2);
 	}
 	snprintf(buffer, MAX_BUFFER, "%x", input);
-    write(fd_in, buffer, strlen(buffer));
-    int n=write(fd_in, buffer, strlen(buffer));
+	int n=write(fd_in, buffer, strlen(buffer));
     if(n!=strlen(buffer)){
         printf("Open %s - error number %d\n", filePath, errno);
         close(fd_in);
         exit(3);
     }
 	close(fd_in);
-    return 0;
 }
 
 /*operacja mnożenia -  to wczytywanie danych od użytkownika
@@ -98,64 +96,69 @@ struct multiplication_result {
 
 struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
-    write_to_file(SYSFS_FILE_WE1,arg1);
-    write_to_file(SYSFS_FILE_WE2,arg2);
-    unsigned int read = 0;
-    unsigned int readw = 0;
-    unsigned int readl = 0;
-    unsigned int readb = 0;
-    int k =0;
-    int l=0;
- while (l==0) {
+write_to_file(SYSFS_FILE_WE1,arg1);
+write_to_file(SYSFS_FILE_WE2,arg2);
+unsigned int read = 0;
+unsigned int readw = 0;
+unsigned int readl = 0;
+unsigned int readb = 0;
+do{
+    read = read_from_file(SYSFS_FILE_STATUS);
+    read = read_from_file(SYSFS_FILE_STATUS);
+
+    readw = read_from_file(SYSFS_FILE_RES);
+    readl = read_from_file(SYSFS_FILE_ONES);
+    readb = read_from_file(SYSFS_FILE_STATUS);}
+while (read != 3 && readw == 0 && readl == 0);
+
+
+  
+    readw = read_from_file(SYSFS_FILE_RES);
+    readl = read_from_file(SYSFS_FILE_ONES);
+    readb = read_from_file(SYSFS_FILE_STATUS);
+//}
+/*
+ while () {
         unsigned int read = read_from_file(SYSFS_FILE_STATUS);
         unsigned int readw = read_from_file(SYSFS_FILE_RES);
         unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
         unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
-        unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
-        unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
-       
-        if (read == 3 && readw != 0 ){
-        l++;}
-
-        if (readw ==0 )
-            {
-            printf("result cannot be represented in 32 bits");    
-            break;
-        }
-
-        if (k == 10 ){
-        break;
-        }
-        k++;
+        if (read == 3 && readw != 0 && readl != 0) break;
+       /* readw = read_from_file(SYSFS_FILE_RES);
+        readl = read_from_file(SYSFS_FILE_ONES);
+        readb = read_from_file(SYSFS_FILE_STATUS);
     }
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);
+        readb = read_from_file(SYSFS_FILE_STATUS);*/
 
 
-        struct multiplication_result result;
-        result.w = readw;
-        result.l = readl;
-        result.b = readb;
+//} 
 
-        return result;
+struct multiplication_result result;
+  result.w = readw;
+  result.l = readl;
+  result.b = readb;
+
+//printf("A1=0x%x, A2=0x%x, W=0x%x, L=0x%x, B =0x%x", arg1, arg2, readw, readl,readb);
+//printf("A1=0x%x, A2=0x%x", arg1, arg2);
+return result;
 }
 
 int random_in_range(int min, int max) {
     return min + rand() % (max - min + 1);
 }
 
-int count_ones(unsigned int n) {
+int count_ones(unsigned int num) {
     int count = 0;
-    int a[32];
-
-    for( int i=0;n>0;i++){    
-    a[i]=n%2;    
-    if(a[i] == 1){
-        count++;
+    char binary[33]; 
+    sprintf(binary, "%032lX", num);
+   
+    for (int i = 0; i < 32; i++) {
+        if (binary[i] == '1') {
+            count++;
+        }
     }
-    n=n/2;    
-    }       
     return count;
 }
 
@@ -165,7 +168,7 @@ int test_module(){
     unsigned int a1;
     unsigned int a2;
     unsigned int w;
-    unsigned int num_ones;
+    int num_ones;
 } MyStruct;
 
 
@@ -173,27 +176,24 @@ int test_module(){
  MyStruct values[500];
 
  for (int i = 0; i < 500; i++) {
-        values[i].a1 = random_in_range(0, 1048575); 
-        values[i].a2 = random_in_range(0, 1048575);  
+        values[i].a1 = random_in_range(0, 1048575); // 20 
+        values[i].a2 = random_in_range(0, 1048575); // 20 
         values[i].w = values[i].a1 * values[i].a2;
-        values[i].num_ones = count_ones(values[i].w);
-    }
+        values[i].num_ones = count_ones(values[i].w);}
 
-
-
-
-
-    int k=0;
-    for(int i=0; i<500; i++){
-    struct multiplication_result result = multiply(values[i].a1,values[i].a2);
-    if( result.w != values[i].w && result.l != values[i].num_ones){
-    printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %x,resultl = %x\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
-    k++;
-    }}
-
-    return k;
+/*unsigned int args1[3] = { 3, 0xc, 8};
+unsigned int args2[3] = { 4, 3, 3};
+unsigned int results[3] = { 0xc,24,18 };
+unsigned int ones[3] ={3,2,2};*/
+int k=0;
+for(int i=0; i<500; i++){
+struct multiplication_result result = multiply(values[i].a1,values[i].a2);
+if( result.w != values[i].w && result.l != values[i].num_ones)
+printf("ERROR: a1 = %u, a2 = %u, expected w = %u, expected num_ones = %u, resultw = %u,resultw = %u\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
+k++;
+}
+return k;
 }
 
-//tu na końcu dodałem nawias po k++
 
 

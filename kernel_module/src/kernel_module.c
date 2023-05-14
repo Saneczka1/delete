@@ -4,7 +4,6 @@
 #include <asm/errno.h>
 #include <asm/io.h>
 
-
 MODULE_INFO(intree, "Y");
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Aleksander Pruszkowski");
@@ -14,21 +13,26 @@ MODULE_VERSION("0.01");
 #define SYKT_MEM_SIZE (0x8000)
 #define SYKT_EXIT (0x3333)
 #define SYKT_EXIT_CODE (0x7F)
+
+
+#define SYKT_QEMU_CTRL_ADDR (0x00100000)
 #define SYKT_QEMU_EXIT_VAL (0x00007777)
  
 
 
 #define SYKT_GPIO_ADDR_SPACE (baseptr) 
 #define SYKT_GPIO_ARG2_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000388)
+#define SYKT_GPIO_CTRL_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A1)
 #define SYKT_GPIO_ARG1_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000380)
 #define SYKT_GPIO_RESULT_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000390)
 #define SYKT_GPIO_ONES_ADDR (SYKT_GPIO_ADDR_SPACE+0x00000398)
 #define SYKT_GPIO_STATUS_ADDR (SYKT_GPIO_ADDR_SPACE+0x000003A0)
 
-
+#define DONE (0x00000001)
 
 void __iomem *baseptr;
 static struct kobject *kobj_ref;
+static int ctrl;
 static int raba1;
 static int raba2;
 static int rabw;
@@ -41,7 +45,7 @@ static int rabb;
 static bool is_hex(const char *buf, size_t count) {
     for (size_t i = 0; i < count; ++i) {
         char c = buf[i];
-            if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
+        if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
             return false;
         }
     }
@@ -50,101 +54,101 @@ static bool is_hex(const char *buf, size_t count) {
 
 static ssize_t raba1_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
 {
-    sscanf(buf,"%x",&raba1);
-    
-    if (!is_hex(buf, count)) {
+if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
 
-
-    writel(raba1, SYKT_GPIO_ARG1_ADDR);
-    return count;
+sscanf(buf,"%x",&raba1);
+writel(raba1, SYKT_GPIO_ARG1_ADDR);
+return count;
 }
 
 
 static ssize_t raba2_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
 {
-    sscanf(buf,"%x",&raba2);
-    
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
-
-    writel(raba2, SYKT_GPIO_ARG2_ADDR);
-    return count;
+sscanf(buf,"%x",&raba2);
+writel(raba2, SYKT_GPIO_ARG2_ADDR);
+return count;
 }
 
 
-static ssize_t raba1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
-    raba1 = readl(SYKT_GPIO_ARG1_ADDR);
-    return sprintf(buf, "%x", raba1);
+static ssize_t raba1_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+{
+raba1 = readl(SYKT_GPIO_ARG1_ADDR);
+return sprintf(buf, "%x", raba1);
 }
 
 
-static ssize_t raba2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
-    raba2 = readl(SYKT_GPIO_ARG2_ADDR);
-    return sprintf(buf, "%x", raba2);
+static ssize_t raba2_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+{
+raba2 = readl(SYKT_GPIO_ARG2_ADDR);
+return sprintf(buf, "%x", raba2);
 }
 
 
-static ssize_t rabw_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count){
-    sscanf(buf,"%x",&rabw);
-    
+static ssize_t rabw_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
+{
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
-
-    writel(rabw, SYKT_GPIO_RESULT_ADDR);
-    return count;
+sscanf(buf,"%x",&rabw);
+writel(rabw, SYKT_GPIO_RESULT_ADDR);
+return count;
 }
 
 
-static ssize_t rabl_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count){
-    sscanf(buf,"%x",&rabl);
-    
+static ssize_t rabl_store(struct kobject *kobj,struct kobj_attribute *attr,const char *buf, size_t count)
+{
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
-
-    writel(rabl, SYKT_GPIO_ONES_ADDR);
-    return count;
+sscanf(buf,"%x",&rabl);
+writel(rabl, SYKT_GPIO_ONES_ADDR);
+return count;
 }
 
 
 
-static ssize_t rabw_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
-    rabw = readl(SYKT_GPIO_RESULT_ADDR);
-    return sprintf(buf, "%x", rabw);
+static ssize_t rabw_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+{
+
+rabw = readl(SYKT_GPIO_RESULT_ADDR);
+return sprintf(buf, "%x", rabw);
 }
 
 
 
 
-static ssize_t rabl_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
+static ssize_t rabl_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+{
     rabl = readl(SYKT_GPIO_ONES_ADDR);
     return sprintf(buf, "%x", rabl);
 }
 
 
-static ssize_t rabb_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf){
-    rabb = readl(SYKT_GPIO_STATUS_ADDR);
-    return sprintf(buf, "%x", rabb);
+static ssize_t rabb_show(struct kobject *kobj,struct kobj_attribute *attr, char *buf)
+
+{
+rabb = readl(SYKT_GPIO_STATUS_ADDR);
+return sprintf(buf, "%x", rabb);
 }
 
-static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count){
-    sscanf(buf,"%x",&rabb);
-    
+static ssize_t rabb_store(struct kobject *kobj, struct kobj_attribute *attr,const char *buf, size_t count)
+{
     if (!is_hex(buf, count)) {
         printk(KERN_ERR "Invalid hex string: %.*s\n", (int)count, buf);
         return -EINVAL;
     }
-       
-	writel(rabb, SYKT_GPIO_STATUS_ADDR);
-    return count;
+        sscanf(buf,"%x",&ctrl);
+		writel(rabb, SYKT_GPIO_STATUS_ADDR);
+        return count;
 }
 
 

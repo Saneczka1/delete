@@ -173,8 +173,8 @@ int test_module(){
  MyStruct values[500];
 
  for (int i = 0; i < 500; i++) {
-        values[i].a1 = random_in_range(268435400, 268435455); 
-        values[i].a2 = random_in_range(268435400, 268435455);  
+        values[i].a1 = random_in_range(0, 1048575); 
+        values[i].a2 = random_in_range(0, 1048575);  
         values[i].w = values[i].a1 * values[i].a2;
         values[i].num_ones = count_ones(values[i].w);
     }

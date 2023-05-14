@@ -127,7 +127,7 @@ int l=0;
         if (read == 3 && readw != 0 && readst == 3){
         l++;
         }
-        if (k == 10 )
+        if (readw ==0 )
             {
             printf("the result cannot be represented in 32 bits");    
             break;

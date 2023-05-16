@@ -109,9 +109,10 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
     int l=0;
 	while (l==0) {
       //  unsigned int read = read_from_file(SYSFS_FILE_STATUS);
+       readb = read_from_file(SYSFS_FILE_STATUS);
         readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);
+        
         //reada1 = read_from_file( SYSFS_FILE_WE1);
         //reada2 = read_from_file( SYSFS_FILE_WE2);
        

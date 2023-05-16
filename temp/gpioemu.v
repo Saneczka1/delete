@@ -79,6 +79,7 @@ module gpioemu(n_reset,
 		begin
 			ready <= 1'b0;
 			done =0;
+			state <= 0;
 			valid =1'b1;
 			B = 2'b01;
 			gpio_out_s <= gpio_out_s + 1; //licznik

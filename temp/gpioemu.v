@@ -38,7 +38,7 @@ module gpioemu(n_reset,
     reg unsigned[23:0] L;
     reg unsigned[1:0] B;
     reg unsigned[15:0] operation_count;
-    reg unsigned[3:0] state;
+    reg unsigned[1:0] state;  //zmieniłem state 
 	reg unsigned valid;
     reg unsigned[23:0] tmp_ones_count;
     reg ready;
@@ -75,6 +75,7 @@ module gpioemu(n_reset,
 
     always @(posedge swr) 
 	begin   
+	
 			if (saddress == 16'h03A0 ) 
 		begin
 			ready <= 1'b0;
@@ -98,9 +99,9 @@ always @(posedge srd)
 begin
     if (saddress == 16'h0390) 
 	
-     //  if (done) begin  //jeszcze sprawdzić to
+       if (done) begin  //jeszcze sprawdzić to
 	    sdata_out_s <= W[31:0];
-      //  end
+        end
     
 		else if (saddress == 16'h03A0) 
 		

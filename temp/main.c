@@ -107,6 +107,7 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
     int k =0;
     int l=0;
+    int m =0;
 	while (l==0) {
       //  unsigned int read = read_from_file(SYSFS_FILE_STATUS);
         readw = read_from_file(SYSFS_FILE_RES);
@@ -116,10 +117,10 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
        // reada1 = read_from_file( SYSFS_FILE_WE1);
        // reada2 = read_from_file( SYSFS_FILE_WE2);
        
-        if (readb == 3 && readw != 0 ){
+        if (readb == 3 && readw != 0  && m >2){
         l++;}
 
-        if (readb ==0 )
+        if (readb == 0 && m !=0)
             {
             printf("result cannot be represented in 32 bits");    
             break;
@@ -129,6 +130,7 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
         break;
         }
         k++;
+        m++;
         
     }
 

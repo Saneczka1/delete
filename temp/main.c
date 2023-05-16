@@ -112,8 +112,8 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
         readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
         readb = read_from_file(SYSFS_FILE_STATUS);
-        reada1 = read_from_file( SYSFS_FILE_WE1);
-        reada2 = read_from_file( SYSFS_FILE_WE2);
+        //reada1 = read_from_file( SYSFS_FILE_WE1);
+        //reada2 = read_from_file( SYSFS_FILE_WE2);
        
         if (readb == 3 && readw != 0 ){
         l++;}

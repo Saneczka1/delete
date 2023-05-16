@@ -81,7 +81,6 @@ module gpioemu(n_reset,
 			done =0;
 			valid =1'b1;
 			B = 2'b01;
-			state <= IDLE;
 			gpio_out_s <= gpio_out_s + 1; //licznik
 		end
 			if (saddress == 16'h0380)

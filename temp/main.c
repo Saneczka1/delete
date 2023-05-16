@@ -98,7 +98,7 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
     write_to_file(SYSFS_FILE_WE1,arg1);
     write_to_file(SYSFS_FILE_WE2,arg2);
-    usleep(8000);  // wait 10 ms
+    usleep(10000);  // wait 10 ms
     unsigned int read;
     unsigned int readw;
     unsigned int readl;
@@ -119,13 +119,12 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
        
         if (readb == 3 && readw != 0 ){
         l++;}
-/*
+
         if (readb ==0 )
             {
             printf("result cannot be represented in 32 bits");    
             break;
         }
-        */
 
         if (k == 20 ){
         break;

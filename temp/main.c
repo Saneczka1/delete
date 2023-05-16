@@ -112,7 +112,7 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
         readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
         readb = read_from_file(SYSFS_FILE_STATUS);
-        printf(rabw);
+        printf(readw);
        // reada1 = read_from_file( SYSFS_FILE_WE1);
        // reada2 = read_from_file( SYSFS_FILE_WE2);
        

@@ -197,7 +197,7 @@ int test_module(){
 			printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %x,resultl = %x\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 			k++;
 		}
-        usleep(8000);  // wait 10 ms
+        usleep(6000);  // wait 10 ms
 	}
 
     return k;

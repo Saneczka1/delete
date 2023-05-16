@@ -1,6 +1,8 @@
 /* verilator lint_off UNUSED */
 /* verilator lint_off MULTIDRIVEN */
 /* verilator lint_off BLKSEQ */
+/* verilator lint_off WIDTH */
+/* verilator lint_off UNDRIVEN */
 module gpioemu(n_reset,
     saddress[15:0], srd, swr,
     sdata_in[31:0], sdata_out[31:0],
@@ -48,11 +50,14 @@ module gpioemu(n_reset,
               COUNT_ONES = 2,
               DONE = 3;
 
-    always @(negedge n_reset) begin
+    always @(negedge n_reset)
+	begin
         gpio_in_s <= 0;
         gpio_out_s <= 0;
         sdata_out_s <= 0;
-        state <= 4;
+		
+		valid =1;
+        state <= IDLE;
         result =49'b0;
 		W = 32'b0;
         tmp_ones_count = 0;
@@ -60,60 +65,68 @@ module gpioemu(n_reset,
         ready <= 1'b1;
         A1 <= 0;
         A2 <= 0;
-        L <= 0;
+        L = 0;
         B = 2'b11;
-		done <=1'b0;
+		done =1'b0;
     end
 	
 	
 	
 
-    always @(posedge swr) begin   // może być błąd
-       
-    if (saddress == 16'h03A0 ) begin
-        ready <= 1'b0;
-		done <=0;
-		valid =1'b1;
-		B = 2'b01;
-        state <= IDLE;
-        gpio_out_s <= gpio_out_s + 1; //licznik
-    end
-    if (saddress == 16'h37F) // adres pierwszego argumentu
-        A1 <= sdata_in[23:0];
-    else if (saddress == 16'h0388) // adres drugiego argumentu
-        A2 <= sdata_in[23:0];
+    always @(posedge swr) 
+	begin   
+			if (saddress == 16'h03A0 ) 
+		begin
+			ready <= 1'b0;
+			done =0;
+			valid =1'b1;
+			B = 2'b01;
+			state <= IDLE;
+			gpio_out_s <= gpio_out_s + 1; //licznik
+		end
+			if (saddress == 16'h0380)
+			begin	// adres pierwszego argumentu
+			A1 <= sdata_in;
+			end
+    else if (saddress == 16'h0388)begin // adres drugiego argumentu
+		A2 <= sdata_in;
+		end
+	end
+
+
+
+always @(posedge srd) 
+begin
+    if (saddress == 16'h0390) 
+	
+     //  if (done) begin  //jeszcze sprawdzić to
+	    sdata_out_s <= W[31:0];
+      //  end
+    
+		else if (saddress == 16'h03A0) 
+		
+			sdata_out_s <= {30'b0, B};																	
+	
+		else if (saddress == 16'h0398) 
+		
+			sdata_out_s <= {8'h0, L};
+		
+		else 
+		
+			sdata_out_s <= 'h0;
+		
 end
 
 
 
-always @(posedge srd) begin
-    if (saddress == 16'h390) begin
-        if (done) begin
-		W = result[31:0];
-            sdata_out_s <= W[31:0];
-        end
-    end 
-	else if (saddress == 16'h3A0) begin
-        sdata_out_s <= {30'b0, B};																	
-    end 
-	else if (saddress == 16'h398) begin
-        sdata_out_s <= {8'h0, tmp_ones_count};
-    end 
-	else begin
-        sdata_out_s <= 0;
-    end
-end
-
-
-
-always @(posedge clk) begin
+always @(posedge clk) begin 
     case (state)
         IDLE: begin
             result = 0;
 			ready <= 1'b0;
 			valid =1'b1;
 			B = 2'b01;
-			done <= 0;
+			done = 0;
             tmp_ones_count = 0;
             state <= MULT;
         end
@@ -121,8 +134,9 @@ always @(posedge clk) begin
 			ready <= 0;
 			result =49'b0;
 			temp_result ={25'h0, A1};
-            for (integer i = 0; i < 24; i = i + 1) begin
-			if(i!=1)begin
+            for (integer i = 0; i < 24; i = i + 1)
+			begin
+			if(i!=0) begin
 			      temp_result= temp_result<<1;
 				  end
                 if (A2[i]) begin
@@ -130,8 +144,8 @@ always @(posedge clk) begin
                 end
             end
 			valid = (result[48:32] == 0);
-			W = result [31:0];
 			B ={ready,valid};
+			W = result [31:0];
             state <= COUNT_ONES;
         end
         COUNT_ONES: begin
@@ -148,11 +162,10 @@ always @(posedge clk) begin
             state <= DONE;
         end
         DONE: begin
-		done <= 1'b1;
-		
-           
-				B = 2'b11;
-                operation_count <= operation_count + 1;
+		done = 1'b1;		
+		B = 2'b11;
+        operation_count <= operation_count + 1;
+		state<=IDLE;
            
         end
     endcase
@@ -161,4 +174,6 @@ end
 assign gpio_out = {16'h0, operation_count[15:0]};
 assign gpio_in_s_insp = gpio_in_s;
 assign sdata_out = sdata_out_s;
+//assign gpio_out =gpio_out_s;
 endmodule
+//for commit

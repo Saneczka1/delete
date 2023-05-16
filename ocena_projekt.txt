@@ -1,0 +1,28 @@
+Porazka --- system zwracal bledne wartosci -- suma 17 nie upowaznia do otrzymania premi!!!!!
+
+
+Projekt skala 0...36pkt
+
+-Przygotowanie zgodnie ze specyfikacj¹ modu³u gpioemu.v         (0...6pkt):	3
+	-blad w obliczeniach 
+
+-Utworzenie zgodnego ze specyfikacj¹ modu³u j¹dra               (0...10pkt):	5
+	-"sscanf(buf,"%x",&raba1);if (!is_hex(buf, count)) {...}" powinny byc w innej kolejnosci
+	-is_hex() jest bledna bo nie zawuaza konca linii i traktuej to jako blad
+ 
+-Przygotowanie tzw. aplikacji testuj¹cej utworzony system       (0...8pkt):	4
+	-strtoul()
+	-multiply() ma konstrukcje nieco zagmatwana
+	
+-Przygotowanie raportu z udokumentowaniem poprawnoœci dzia³ania (0...10pkt):	3
+	-bledy w logach na cos wskazuja?
+	-system nie dziala poprawnie w testach 
+	-testy w Verilog nie wiele pokazuja 
+
+-Jakoœæ redakcyjna raportu (kompletnoœæ, czytelnoœæ,...)        (0...2pkt):	2
+	ok
+
+
+
++10pkt za podejscie "na 1 miesi¹c przed koñcem zajêæ"	
+	warunek: "o ile jego rozwi¹zanie bêdzie ukoñczone w przynajmniej 50%" (w tym terminie)

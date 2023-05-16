@@ -169,6 +169,7 @@ always @(posedge clk) begin
         end
 		default: begin
 				state <= 4; 
+			end
     endcase
 end
 

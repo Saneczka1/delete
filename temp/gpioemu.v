@@ -165,11 +165,7 @@ always @(posedge clk) begin
 		B = 2'b11;
         operation_count <= operation_count + 1;
 		state<=4;
-         
         end
-		default: begin
-				state <= 4; 
-			end
     endcase
 end
 

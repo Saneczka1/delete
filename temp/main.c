@@ -98,7 +98,6 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
     write_to_file(SYSFS_FILE_WE1,arg1);
     write_to_file(SYSFS_FILE_WE2,arg2);
-   // usleep(10000);  // wait 10 ms
     unsigned int read;
     unsigned int readw;
     unsigned int readl;
@@ -196,7 +195,6 @@ int test_module(){
 			printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %x,resultl = %x\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);
 			k++;
 		}
-       // usleep(8000);  // wait 10 ms
 	}
 
     return k;

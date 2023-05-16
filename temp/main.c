@@ -102,16 +102,18 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
     unsigned int readw;
     unsigned int readl;
     unsigned int readb; 
+    unsigned int tempw; 
+
 
     int k =0;
     int l=0;
 	while (l==0) {
       //  unsigned int read = read_from_file(SYSFS_FILE_STATUS);
-        unsigned int readw = read_from_file(SYSFS_FILE_RES);
-        unsigned int  readl = read_from_file(SYSFS_FILE_ONES);
-        unsigned int  readb = read_from_file(SYSFS_FILE_STATUS);
-        unsigned int  reada1 = read_from_file( SYSFS_FILE_WE1);
-        unsigned int  reada2 = read_from_file( SYSFS_FILE_WE2);
+        readw = read_from_file(SYSFS_FILE_RES);
+        readl = read_from_file(SYSFS_FILE_ONES);
+        readb = read_from_file(SYSFS_FILE_STATUS);
+        reada1 = read_from_file( SYSFS_FILE_WE1);
+        reada2 = read_from_file( SYSFS_FILE_WE2);
        
         if (readb == 3 && readw != 0 ){
         l++;}
@@ -126,11 +128,14 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
         break;
         }
         k++;
+        
     }
-    
+
+
+    /*
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);
+        readb = read_from_file(SYSFS_FILE_STATUS);*/
 
 
         struct multiplication_result result;

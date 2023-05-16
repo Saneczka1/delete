@@ -112,6 +112,7 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
         readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
         readb = read_from_file(SYSFS_FILE_STATUS);
+        printf(rabw);
        // reada1 = read_from_file( SYSFS_FILE_WE1);
        // reada2 = read_from_file( SYSFS_FILE_WE2);
        
@@ -177,10 +178,10 @@ int test_module(){
 	} MyStruct;
 
 
-    MyStruct values[1];
+    MyStruct values[2];
 
 
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 2; i++) {
         values[i].a1 = random_in_range(0, 1048575); 
         values[i].a2 = random_in_range(0, 1048575);  
         values[i].w = values[i].a1 * values[i].a2;
@@ -188,7 +189,7 @@ int test_module(){
     }
 
     int k=0;
-    for(int i=0; i<1; i++){
+    for(int i=0; i<2; i++){
 		struct multiplication_result result = multiply(values[i].a1,values[i].a2);
 		if( result.w != values[i].w && result.l != values[i].num_ones){
 			printf("ERROR: a1 = %x, a2 = %x, expected w = %x, expected num_ones = %x, resultw = %x,resultl = %x\n", values[i].a1, values[i].a2, values[i].w, values[i].num_ones, result.w,result.l);

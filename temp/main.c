@@ -127,10 +127,10 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
         }
         k++;
     }
-    /*
+    
      readw = read_from_file(SYSFS_FILE_RES);
         readl = read_from_file(SYSFS_FILE_ONES);
-        readb = read_from_file(SYSFS_FILE_STATUS);*/
+        readb = read_from_file(SYSFS_FILE_STATUS);
 
 
         struct multiplication_result result;

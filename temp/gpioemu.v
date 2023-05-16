@@ -99,7 +99,7 @@ always @(posedge srd)
 begin
     if (saddress == 16'h0390) 
 	
-       if (B == 11) begin  //jeszcze sprawdzić to
+       if (B == 2'b11) begin  //jeszcze sprawdzić to
 	    sdata_out_s <= W[31:0];
         end
     

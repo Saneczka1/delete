@@ -98,10 +98,10 @@ struct multiplication_result multiply(unsigned int arg1, unsigned int arg2){
 
     write_to_file(SYSFS_FILE_WE1,arg1);
     write_to_file(SYSFS_FILE_WE2,arg2);
-    /*unsigned int read = 0;
-    unsigned int readw = 0;
-    unsigned int readl = 0;
-    unsigned int readb = 0;*/
+    unsigned int read;
+    unsigned int readw;
+    unsigned int readl;
+    unsigned int readb; 
 
     int k =0;
     int l=0;
